@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emirhan Yılmazkol | Computer Engineer & Full-Stack Developer</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#151e32',
+                            900: '#0f172a',
+                            950: '#090d16',
+                        }
+                    },
+                    animation: {
+                        'blob': 'blob 8s infinite',
+                        'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -40px) scale(1.08)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.95)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom subtle scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+
+        /* Glassmorphism utilities */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        html:not(.dark) .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06);
+        }
+
+        .code-grid-bg {
+            background-size: 36px 36px;
+            background-image: 
+                linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased transition-colors duration-300 selection:bg-cyan-500 selection:text-white overflow-x-hidden">
+
+    <!-- Background Decorative Glows -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute -top-32 -left-32 w-96 h-96 bg-cyan-500/15 dark:bg-cyan-500/10 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl animate-blob"></div>
+        <div class="absolute top-1/3 -right-32 w-96 h-96 bg-emerald-500/15 dark:bg-emerald-500/10 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl animate-blob" style="animation-delay: 2s;"></div>
+        <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-indigo-500/15 dark:bg-indigo-500/10 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl animate-blob" style="animation-delay: 4s;"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo / Brand -->
+                <a href="#" class="flex items-center space-x-2 group">
+                    <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500 to-emerald-500 flex items-center justify-center text-white font-mono font-bold text-lg shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+                        EY
+                    </span>
+                    <span class="font-bold text-lg tracking-tight text-slate-900 dark:text-white">
+                        Emirhan<span class="text-cyan-500">.dev</span>
+                    </span>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-7 text-sm font-medium">
+                    <a href="#about" data-i18n="nav_about" class="text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Ben Kimim?</a>
+                    <a href="#skills" data-i18n="nav_skills" class="text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Yetenekler</a>
+                    <a href="#experience" data-i18n="nav_experience" class="text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Eğitim & Deneyim</a>
+                    <a href="#projects" data-i18n="nav_projects" class="text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Projeler</a>
+                    <a href="#managed-social" data-i18n="nav_managed_social" class="text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Sosyal Medya</a>
+                    <a href="#contact" data-i18n="nav_contact" class="text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">İletişim</a>
+                </nav>
+
+                <!-- Action Controls: Language Toggle & Theme Toggle & Mobile Menu -->
+                <div class="flex items-center space-x-2 sm:space-x-3">
+                    <!-- Language Switcher (TR / EN) -->
+                    <button id="langToggle" aria-label="Change Language" class="px-3 py-1.5 rounded-xl text-xs font-mono font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-cyan-400 hover:border-cyan-500 transition-all flex items-center space-x-1.5">
+                        <i class="fa-solid fa-globe"></i>
+                        <span id="currentLangLabel">TR</span>
+                    </button>
+
+                    <!-- Dark/Light Theme Toggle -->
+                    <button id="themeToggle" aria-label="Toggle Theme" class="p-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:border-cyan-500 transition-all">
+                        <i id="themeIcon" class="fa-solid fa-sun text-amber-400"></i>
+                    </button>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" aria-label="Open Menu" class="md:hidden p-2 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Navigation -->
+        <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-5 space-y-2">
+            <a href="#about" data-i18n="nav_about" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Ben Kimim?</a>
+            <a href="#skills" data-i18n="nav_skills" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Yetenekler</a>
+            <a href="#experience" data-i18n="nav_experience" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Eğitim & Deneyim</a>
+            <a href="#projects" data-i18n="nav_projects" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Projeler</a>
+            <a href="#managed-social" data-i18n="nav_managed_social" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Sosyal Medya</a>
+            <a href="#contact" data-i18n="nav_contact" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">İletişim</a>
+        </div>
+    </header>
+
+    <main class="relative z-10">
+        <!-- 1. HERO SECTION -->
+        <section class="relative pt-16 pb-20 lg:pt-24 lg:pb-28 code-grid-bg">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Left Column: Intro Text -->
+                    <div class="lg:col-span-7 space-y-6 animate-fade-in-up">
+                        <!-- Status Badge -->
+                        <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm font-medium">
+                            <span class="relative flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                            </span>
+                            <span data-i18n="hero_badge">Fuar Hastanesi • Bilgi İşlem Departmanı</span>
+                        </div>
+
+                        <!-- Main Title -->
+                        <div class="space-y-2">
+                            <p class="font-mono text-sm sm:text-base text-cyan-600 dark:text-cyan-400" data-i18n="hero_greeting">Merhaba, ben</p>
+                            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                                Emirhan Yılmazkol
+                            </h1>
+                            <h2 class="text-xl sm:text-2xl font-semibold bg-gradient-to-r from-cyan-500 via-teal-400 to-emerald-500 bg-clip-text text-transparent pt-1" data-i18n="hero_role">
+                                Bilgisayar Mühendisi | Bilgi İşlem & Full-Stack Yazılım Geliştirici
+                            </h2>
+                        </div>
+
+                        <!-- Short Summary -->
+                        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl" data-i18n="hero_desc">
+                            Süleyman Demirel Üniversitesi Bilgisayar Mühendisliği mezunuyum (3.42/4.00). Şu anda Fuar Hastanesi Bilgi İşlem bölümünde görev almakta olup; Beyaz Belgelendirme'deki yazılım geliştirme, TCDD Teknik yazılım otomasyonu ve YOLOv8 tabanlı görüntü işleme deneyimlerimle uçtan uca teknolojik çözümler üretiyorum.
+                        </p>
+
+                        <!-- Location & Quick Info Pills -->
+                        <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 font-mono">
+                            <span class="flex items-center gap-1.5">
+                                <i class="fa-solid fa-location-dot text-cyan-500"></i> Antalya, Türkiye
+                            </span>
+                            <span class="hidden sm:inline">•</span>
+                            <span class="flex items-center gap-1.5">
+                                <i class="fa-solid fa-graduation-cap text-emerald-500"></i> GPA: 3.42 / 4.00
+                            </span>
+                        </div>
+
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-wrap items-center gap-4 pt-2">
+                            <a href="#projects" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-600 hover:to-emerald-600 text-white font-semibold shadow-lg shadow-cyan-500/25 transition-all transform hover:-translate-y-0.5 flex items-center space-x-2">
+                                <span data-i18n="btn_projects">Projelerimi İncele</span>
+                                <i class="fa-solid fa-arrow-right text-sm"></i>
+                            </a>
+                            <a href="#contact" class="px-6 py-3.5 rounded-xl glass-card hover:border-cyan-500/50 text-slate-800 dark:text-white font-semibold transition-all transform hover:-translate-y-0.5 flex items-center space-x-2">
+                                <i class="fa-regular fa-paper-plane text-cyan-500"></i>
+                                <span data-i18n="btn_contact">İletişime Geç</span>
+                            </a>
+                        </div>
+
+                        <!-- Social Quick Links -->
+                        <div class="flex flex-wrap items-center gap-3 pt-2">
+                            <a href="https://www.linkedin.com/in/emirhan-y%C4%B1lmazkol-211831259/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-cyan-500 dark:hover:text-cyan-400 hover:border-cyan-500/40 transition-all">
+                                <i class="fa-brands fa-linkedin-in text-lg"></i>
+                            </a>
+                            <a href="https://www.instagram.com/emirhanyilmazkol/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-pink-500 dark:hover:text-pink-400 hover:border-pink-500/40 transition-all">
+                                <i class="fa-brands fa-instagram text-lg"></i>
+                            </a>
+                            <a href="tel:xxxxxxxxxxx" aria-label="Phone" title="xxxxxxxxxxx" class="px-3.5 h-10 rounded-xl glass-card flex items-center justify-center gap-2 text-xs font-mono text-slate-700 dark:text-slate-200 hover:text-emerald-500 dark:hover:text-emerald-400 hover:border-emerald-500/40 transition-all">
+                                <i class="fa-solid fa-phone text-emerald-500"></i>
+                                <span>xxxxxxxxxxx</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Developer Terminal / Profile Card -->
+                    <div class="lg:col-span-5">
+                        <div class="glass-card rounded-2xl p-1 shadow-2xl border border-slate-200/80 dark:border-slate-800/80">
+                            <!-- Terminal Top Bar -->
+                            <div class="flex items-center justify-between px-4 py-3 border-b border-slate-200/60 dark:border-slate-800/80">
+                                <div class="flex items-center space-x-2">
+                                    <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                                    <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                                </div>
+                                <span class="font-mono text-xs text-slate-400">emirhan_profile.json</span>
+                                <span class="text-xs text-cyan-500 font-mono">v2.0</span>
+                            </div>
+                            <!-- Terminal Body -->
+                            <div class="p-5 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto bg-slate-900/95 text-slate-200 rounded-b-xl">
+<pre><code><span class="text-slate-500">// Computer Engineering Graduate</span>
+<span class="text-cyan-400">const</span> <span class="text-emerald-400">engineer</span> = {
+  <span class="text-indigo-300">name</span>: <span class="text-amber-300">"Emirhan Yılmazkol"</span>,
+  <span class="text-indigo-300">currentRole</span>: {
+    <span class="text-indigo-300">company</span>: <span class="text-amber-300">"Fuar Hastanesi"</span>,
+    <span class="text-indigo-300">department</span>: <span class="text-amber-300">"Bilgi İşlem (IT)"</span>
+  },
+  <span class="text-indigo-300">education</span>: {
+    <span class="text-indigo-300">university</span>: <span class="text-amber-300">"Süleyman Demirel Univ."</span>,
+    <span class="text-indigo-300">degree</span>: <span class="text-amber-300">"B.Sc. Computer Eng."</span>,
+    <span class="text-indigo-300">gpa</span>: <span class="text-rose-400">3.42</span> <span class="text-slate-500">// out of 4.00</span>
+  },
+  <span class="text-indigo-300">fullStack</span>: [
+    <span class="text-amber-300">"React"</span>, <span class="text-amber-300">"Next.js"</span>, <span class="text-amber-300">"TypeScript"</span>,
+    <span class="text-amber-300">"Spring Boot"</span>, <span class="text-amber-300">"Python"</span>, <span class="text-amber-300">"SQL"</span>
+  ],
+  <span class="text-indigo-300">experience</span>: [
+    <span class="text-amber-300">"Beyaz Belgelendirme (Developer)"</span>,
+    <span class="text-amber-300">"TCDD Teknik (Software Automation)"</span>,
+    <span class="text-amber-300">"Industrial Automation & YOLOv8"</span>
+  ]
+};</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ABOUT ME ("BEN KİMİM?") SECTION -->
+        <section id="about" class="py-20 border-t border-slate-200/70 dark:border-slate-800/70">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                    <div>
+                        <span class="font-mono text-sm text-cyan-600 dark:text-cyan-400 uppercase tracking-wider" data-i18n="about_subtitle">01. HAKKIMDA</span>
+                        <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mt-1" data-i18n="about_title">Ben Kimim?</h2>
+                    </div>
+                    <p class="font-mono text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-2 md:mt-0" data-i18n="about_tagline">
+                        Teorik Mühendislik + Pratik Saha Deneyimi
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <!-- Main Bio Narrative -->
+                    <div class="lg:col-span-7 glass-card rounded-2xl p-6 sm:p-8 space-y-5 leading-relaxed text-slate-600 dark:text-slate-300">
+                        <p data-i18n="about_p1">
+                            Süleyman Demirel Üniversitesi Bilgisayar Mühendisliği bölümünden <strong class="text-slate-900 dark:text-white font-semibold">3.42 / 4.00</strong> not ortalamasıyla mezun oldum. Şu anda <strong class="text-emerald-600 dark:text-emerald-400 font-semibold">Fuar Hastanesi Bilgi İşlem</strong> departmanında aktif olarak görev almakta; hastane bilgi yönetim sistemleri (HBYS), kurumsal ağ/sistem altyapısı ve yazılım süreçlerinin kesintisiz işleyişini sağlamaktayım.
+                        </p>
+                        <p data-i18n="about_p2">
+                            Daha önce <strong class="text-slate-900 dark:text-white font-semibold">Beyaz Belgelendirme</strong> bünyesinde yazılımcı olarak görev alarak kurumsal web yazılımı geliştirme ve veritabanı süreçlerinde aktif sorumluluk üstlendim. Full-Stack geliştirici olarak <strong class="text-cyan-600 dark:text-cyan-400 font-medium">React, Next.js, TypeScript, Spring Boot, Python ve SQL</strong> teknolojilerinde güçlü bir altyapıya sahibim. Bununla birlikte yapay zeka ve görüntü işleme alanlarına odaklanarak <strong class="text-indigo-600 dark:text-indigo-400 font-medium">YOLOv8</strong> derin öğrenme modelleriyle nesne tespiti projeleri geliştirdim.
+                        </p>
+                        <p data-i18n="about_p3">
+                            <strong class="text-slate-900 dark:text-white font-semibold">TCDD Teknik</strong> bünyesinde tamamladığım staj ile kurumun yazılım otomasyonu ve operasyonel iş akışlarına hakimiyet kazandım. Ayrıca endüstriyel otomasyon ve saha uygulamaları stajım sayesinde teorik mühendislik bilgimi gerçek saha koşullarında uygulama fırsatı buldum. Analitik düşünme becerileri gelişmiş, takım çalışmasına yatkın ve sürekli öğrenmeye açık bir mühendis olarak değer üretmeye devam ediyorum.
+                        </p>
+                    </div>
+
+                    <!-- Highlight Cards (Metrics & Core Strengths) -->
+                    <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="glass-card rounded-2xl p-6 border-l-4 border-l-emerald-500">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-3">
+                                <i class="fa-solid fa-hospital-user text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white" data-i18n="stat_current_title">Fuar Hastanesi</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1" data-i18n="stat_current_desc">Bilgi İşlem Departmanı (Aktif Görev)</p>
+                        </div>
+
+                        <div class="glass-card rounded-2xl p-6 border-l-4 border-l-cyan-500">
+                            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-500 flex items-center justify-center mb-3">
+                                <i class="fa-solid fa-award text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-slate-900 dark:text-white">3.42 / 4.00</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1" data-i18n="stat_gpa">Mezuniyet Not Ortalaması (SDÜ Bilgisayar Müh.)</p>
+                        </div>
+
+                        <div class="glass-card rounded-2xl p-6 border-l-4 border-l-indigo-500">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-3">
+                                <i class="fa-solid fa-layer-group text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white" data-i18n="stat_fullstack_title">Full-Stack & AI</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1" data-i18n="stat_fullstack_desc">React, Next.js, Spring Boot, Python & YOLOv8</p>
+                        </div>
+
+                        <div class="glass-card rounded-2xl p-6 border-l-4 border-l-amber-500">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-3">
+                                <i class="fa-solid fa-train-subway text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white" data-i18n="stat_field_title">Yazılım & Saha Otomasyonu</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1" data-i18n="stat_field_desc">TCDD Teknik Yazılım Otomasyonu & Endüstriyel Sistemler</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. TECHNICAL SKILLS SECTION -->
+        <section id="skills" class="py-20 bg-slate-100/60 dark:bg-slate-900/40 border-t border-slate-200/70 dark:border-slate-800/70">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <span class="font-mono text-sm text-cyan-600 dark:text-cyan-400 uppercase tracking-wider" data-i18n="skills_subtitle">02. TEKNOLOJİ YIĞINI</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mt-1" data-i18n="skills_title">Teknik Yetkinlikler</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Frontend Card -->
+                    <div class="glass-card rounded-2xl p-6 hover:border-cyan-500/40 transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-500 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-code text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4" data-i18n="skill_cat_frontend">Frontend Geliştirme</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-cyan-500/10 text-cyan-600 dark:text-cyan-300 border border-cyan-500/20">React</span>
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-cyan-500/10 text-cyan-600 dark:text-cyan-300 border border-cyan-500/20">Next.js</span>
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-cyan-500/10 text-cyan-600 dark:text-cyan-300 border border-cyan-500/20">TypeScript</span>
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">JavaScript (ES6+)</span>
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Tailwind CSS</span>
+                        </div>
+                    </div>
+
+                    <!-- Backend & Database Card -->
+                    <div class="glass-card rounded-2xl p-6 hover:border-emerald-500/40 transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-server text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4" data-i18n="skill_cat_backend">Backend & Veritabanı</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border border-emerald-500/20">Spring Boot</span>
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border border-emerald-500/20">Python</span>
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border border-emerald-500/20">SQL / MySQL</span>
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Java</span>
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">RESTful APIs</span>
+                        </div>
+                    </div>
+
+                    <!-- AI & Computer Vision Card -->
+                    <div class="glass-card rounded-2xl p-6 hover:border-indigo-500/40 transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-brain text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4" data-i18n="skill_cat_ai">Yapay Zeka & Görüntü İşleme</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 border border-indigo-500/20">YOLOv8</span>
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 border border-indigo-500/20">Deep Learning</span>
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 border border-indigo-500/20">Computer Vision</span>
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">OpenCV</span>
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Object Detection</span>
+                        </div>
+                    </div>
+
+                    <!-- Engineering & Field Card -->
+                    <div class="glass-card rounded-2xl p-6 hover:border-amber-500/40 transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-gears text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4" data-i18n="skill_cat_eng">Otomasyon & Mühendislik</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-amber-500/10 text-amber-600 dark:text-amber-300 border border-amber-500/20" data-i18n="tag_tcdd">TCDD Teknik Yazılım Otomasyonu</span>
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-amber-500/10 text-amber-600 dark:text-amber-300 border border-amber-500/20" data-i18n="tag_automation">Endüstriyel Otomasyon</span>
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300" data-i18n="tag_field">Saha Uygulamaları</span>
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Git & GitHub</span>
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300" data-i18n="tag_research">Akademik Araştırma</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. EDUCATION & EXPERIENCE TIMELINE -->
+        <section id="experience" class="py-20 border-t border-slate-200/70 dark:border-slate-800/70">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <span class="font-mono text-sm text-cyan-600 dark:text-cyan-400 uppercase tracking-wider" data-i18n="exp_subtitle">03. YOLCULUĞUM</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mt-1" data-i18n="exp_title">Eğitim & İş Deneyimleri</h2>
+                </div>
+
+                <div class="relative border-l-2 border-slate-300 dark:border-slate-800 ml-3 sm:ml-6 space-y-10">
+                    
+                    <!-- Timeline Item 1: Fuar Hastanesi (Current) -->
+                    <div class="relative pl-8 sm:pl-10">
+                        <span class="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-emerald-500 ring-4 ring-white dark:ring-slate-950 animate-pulse"></span>
+                        <div class="glass-card rounded-2xl p-6 sm:p-7 border-l-4 border-l-emerald-500">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                                <span class="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                    <span data-i18n="fuar_badge">Güncel • Aktif Görev</span>
+                                </span>
+                                <span class="font-mono text-xs text-slate-500 dark:text-slate-400" data-i18n="fuar_type">Hastane Bilgi Sistemleri & IT Altyapısı</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white" data-i18n="fuar_role">Bilgi İşlem Uzmanı / Mühendisi</h3>
+                            <p class="text-emerald-600 dark:text-emerald-400 font-medium text-sm mb-3" data-i18n="fuar_company">Fuar Hastanesi — Bilgi İşlem Departmanı</p>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed" data-i18n="fuar_desc">
+                                Fuar Hastanesi Bilgi İşlem bölümünde aktif olarak görev almaktayım. Hastane Bilgi Yönetim Sistemleri (HBYS) süreçlerinin yönetimi, sunucu/ağ altyapısı desteği, veritabanı ve yazılım sorunlarının giderilmesi ile sağlık teknolojileri sistemlerinin kesintisiz ve güvenli çalışmasını sağlamaktayım.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2: Beyaz Belgelendirme -->
+                    <div class="relative pl-8 sm:pl-10">
+                        <span class="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-cyan-500 ring-4 ring-white dark:ring-slate-950"></span>
+                        <div class="glass-card rounded-2xl p-6 sm:p-7 border-l-4 border-l-cyan-500">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                                <span class="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-cyan-500/10 text-cyan-600 dark:text-cyan-400" data-i18n="beyaz_badge">Profesyonel Deneyim • 1.5 Ay</span>
+                                <span class="font-mono text-xs text-slate-500 dark:text-slate-400" data-i18n="beyaz_type">Full-Stack Yazılım Geliştirme</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white" data-i18n="beyaz_role">Yazılımcı (Software Developer)</h3>
+                            <p class="text-cyan-600 dark:text-cyan-400 font-medium text-sm mb-3" data-i18n="beyaz_company">Beyaz Belgelendirme</p>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed" data-i18n="beyaz_desc">
+                                Beyaz Belgelendirme bünyesinde 1,5 ay boyunca yazılımcı olarak görev aldım. Kurumsal belgelendirme süreçlerine yönelik web tabanlı yazılım modüllerinin geliştirilmesi, veritabanı işlemleri, arayüz iyileştirmeleri ve backend entegrasyonları üzerinde aktif olarak çalıştım.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 3: TCDD Teknik Internship -->
+                    <div class="relative pl-8 sm:pl-10">
+                        <span class="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-indigo-500 ring-4 ring-white dark:ring-slate-950"></span>
+                        <div class="glass-card rounded-2xl p-6 sm:p-7 border-l-4 border-l-indigo-500">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                                <span class="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400" data-i18n="tcdd_badge">Kurumsal Mühendislik Stajı</span>
+                                <span class="font-mono text-xs text-slate-500 dark:text-slate-400" data-i18n="tcdd_type">Yazılım Otomasyonu & Kurumsal Sistemler</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white" data-i18n="tcdd_role">Yazılım Otomasyonu Stajyeri</h3>
+                            <p class="text-indigo-600 dark:text-indigo-400 font-medium text-sm mb-3" data-i18n="tcdd_company">TCDD Teknik Mühendislik ve Müşavirlik A.Ş.</p>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed" data-i18n="tcdd_desc">
+                                TCDD Teknik bünyesinde gerçekleştirdiğim staj süresince kurumun yazılım otomasyon altyapısını, kurumsal yazılım süreçlerini ve operasyonel sistem iş akışlarını yakından deneyimledim. Kurumsal yazılım otomasyon araçlarına hakimiyet kazanarak veri yönetimi, süreç otomasyonu ve yazılım geliştirme standartları üzerine pratik yetkinlikler edindim.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 4: Industrial Automation Internship -->
+                    <div class="relative pl-8 sm:pl-10">
+                        <span class="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-amber-500 ring-4 ring-white dark:ring-slate-950"></span>
+                        <div class="glass-card rounded-2xl p-6 sm:p-7">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                                <span class="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400" data-i18n="intern_badge">Mühendislik Stajı</span>
+                                <span class="font-mono text-xs text-slate-500 dark:text-slate-400" data-i18n="intern_type">Saha & Sistem Entegrasyonu</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white" data-i18n="intern_role">Endüstriyel Otomasyon & Saha Uygulamaları Stajyeri</h3>
+                            <p class="text-amber-600 dark:text-amber-400 font-medium text-sm mb-3" data-i18n="intern_sub">Endüstriyel Kontrol ve Yazılım Uygulamaları</p>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed" data-i18n="intern_desc">
+                                Gerçek saha ortamlarında endüstriyel otomasyon süreçlerinin izlenmesi, donanım-yazılım haberleşmesi ve saha uygulamalarının devreye alınması süreçlerinde aktif rol aldım. Teorik mühendislik bilgilerini endüstriyel problemlere entegre ederek pratik çözüm üretme deneyimi kazandım.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 5: Education -->
+                    <div class="relative pl-8 sm:pl-10">
+                        <span class="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-slate-500 ring-4 ring-white dark:ring-slate-950"></span>
+                        <div class="glass-card rounded-2xl p-6 sm:p-7">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                                <span class="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-slate-500/10 text-slate-600 dark:text-slate-300" data-i18n="edu_badge">Lisans Eğitimi • Mezun</span>
+                                <span class="font-mono text-xs text-slate-500 dark:text-slate-400">GPA: 3.42 / 4.00</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white" data-i18n="edu_degree">Bilgisayar Mühendisliği (B.Sc.)</h3>
+                            <p class="text-cyan-600 dark:text-cyan-400 font-medium text-sm mb-3">Süleyman Demirel Üniversitesi</p>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed" data-i18n="edu_desc">
+                                Algoritmalar, veri yapıları, veritabanı yönetim sistemleri, yazılım mühendisliği ve yapay zeka alanlarında güçlü bir teorik ve pratik altyapı edindim. Akademik araştırmalar yürüterek görüntü işleme ve derin öğrenme modelleri üzerine bitirme/araştırma projeleri geliştirdim.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. FEATURED PROJECTS SECTION -->
+        <section id="projects" class="py-20 bg-slate-100/60 dark:bg-slate-900/40 border-t border-slate-200/70 dark:border-slate-800/70">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                    <div>
+                        <span class="font-mono text-sm text-cyan-600 dark:text-cyan-400 uppercase tracking-wider" data-i18n="proj_subtitle">04. ÇALIŞMALARIM</span>
+                        <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mt-1" data-i18n="proj_title">Öne Çıkan Projeler</h2>
+                    </div>
+
+                    <!-- Filter Tabs -->
+                    <div class="inline-flex flex-wrap p-1 rounded-xl glass-card self-start gap-1">
+                        <button class="filter-btn active px-4 py-2 rounded-lg text-xs sm:text-sm font-medium bg-cyan-500 text-white transition-all" data-filter="all" data-i18n="filter_all">Tümü</button>
+                        <button class="filter-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-cyan-500 transition-all" data-filter="fullstack" data-i18n="filter_fullstack">Full-Stack</button>
+                        <button class="filter-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-cyan-500 transition-all" data-filter="ai" data-i18n="filter_ai">AI / Görüntü İşleme</button>
+                    </div>
+                </div>
+
+                <!-- Projects Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-7">
+                    
+                    <!-- Project 1: Deneme Soruları -->
+                    <article class="project-card glass-card rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-cyan-500/50 transition-all" data-category="fullstack">
+                        <div>
+                            <!-- Visual Banner -->
+                            <div class="h-44 bg-gradient-to-br from-slate-900 via-cyan-950 to-indigo-950 p-6 flex flex-col justify-between relative overflow-hidden">
+                                <div class="flex justify-between items-start z-10">
+                                    <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/30" data-i18n="p1_badge">Canlı Platform</span>
+                                    <i class="fa-solid fa-file-circle-question text-2xl text-cyan-400/80"></i>
+                                </div>
+                                <div class="border border-cyan-400/30 rounded-lg p-2.5 bg-cyan-500/10 z-10 flex items-center justify-between text-xs font-mono text-cyan-200">
+                                    <span>denemesorulari.com</span>
+                                    <span class="flex items-center gap-1 text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Live</span>
+                                </div>
+                            </div>
+                            <!-- Content -->
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-cyan-500 transition-colors" data-i18n="p1_title">
+                                    Deneme Soruları Platformu
+                                </h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 mt-2.5 leading-relaxed" data-i18n="p1_desc">
+                                    Öğrencilerin sınavlara hazırlık süreçlerini destekleyen, çevrimiçi deneme testleri çözebildiği ve performanslarını takip edebildiği kapsamlı eğitim ve soru platformu.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6 pt-2">
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="px-2.5 py-1 rounded text-xs font-mono bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">React / Next.js</span>
+                                <span class="px-2.5 py-1 rounded text-xs font-mono bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Full-Stack</span>
+                                <span class="px-2.5 py-1 rounded text-xs font-mono bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">SQL</span>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-slate-200/60 dark:border-slate-800 text-xs font-mono">
+                                <a href="https://denemesorulari.com/" target="_blank" rel="noopener noreferrer" class="text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1.5 font-semibold">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> <span data-i18n="visit_live">Siteyi Ziyaret Et</span>
+                                </a>
+                                <span class="text-slate-400">EdTech</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 2: Ortak Yazılı Sınav Sistemi -->
+                    <article class="project-card glass-card rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-emerald-500/50 transition-all" data-category="fullstack">
+                        <div>
+                            <!-- Visual Banner -->
+                            <div class="h-44 bg-gradient-to-br from-emerald-950 via-slate-900 to-cyan-950 p-6 flex flex-col justify-between relative overflow-hidden">
+                                <div class="flex justify-between items-start z-10">
+                                    <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" data-i18n="p2_badge">Sınav Yönetimi</span>
+                                    <i class="fa-solid fa-pen-to-square text-2xl text-emerald-400/80"></i>
+                                </div>
+                                <div class="border border-emerald-400/30 rounded-lg p-2.5 bg-emerald-500/10 z-10 flex items-center justify-between text-xs font-mono text-emerald-200">
+                                    <span class="truncate">ortakyazilisinavsistemi.com</span>
+                                    <span class="flex items-center gap-1 text-emerald-400 shrink-0 ml-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Live</span>
+                                </div>
+                            </div>
+                            <!-- Content -->
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-emerald-500 transition-colors" data-i18n="p2_title">
+                                    Ortak Yazılı Sınav Sistemi
+                                </h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 mt-2.5 leading-relaxed" data-i18n="p2_desc">
+                                    Ortak yazılı sınavların planlanması, dijital ortamda yönetilmesi ve ölçme-değerlendirme süreçlerinin sistematik şekilde yürütülmesini sağlayan web tabanlı sınav yönetim sistemi.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6 pt-2">
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="px-2.5 py-1 rounded text-xs font-mono bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Spring Boot</span>
+                                <span class="px-2.5 py-1 rounded text-xs font-mono bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">TypeScript</span>
+                                <span class="px-2.5 py-1 rounded text-xs font-mono bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">SQL</span>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-slate-200/60 dark:border-slate-800 text-xs font-mono">
+                                <a href="https://ortakyazilisinavsistemi.com/" target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1.5 font-semibold">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> <span data-i18n="visit_live">Siteyi Ziyaret Et</span>
+                                </a>
+                                <span class="text-slate-400">Exam System</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 3: Sude App -->
+                    <article class="project-card glass-card rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-indigo-500/50 transition-all" data-category="fullstack">
+                        <div>
+                            <!-- Visual Banner -->
+                            <div class="h-44 bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 p-6 flex flex-col justify-between relative overflow-hidden">
+                                <div class="flex justify-between items-start z-10">
+                                    <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-indigo-500/20 text-indigo-300 border border-indigo-500/30" data-i18n="p3_badge">Modern Web App</span>
+                                    <i class="fa-solid fa-rocket text-2xl text-indigo-400/80"></i>
+                                </div>
+                                <div class="border border-indigo-400/30 rounded-lg p-2.5 bg-indigo-500/10 z-10 flex items-center justify-between text-xs font-mono text-indigo-200">
+                                    <span>sude-app.vercel.app</span>
+                                    <span class="flex items-center gap-1 text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Vercel</span>
+                                </div>
+                            </div>
+                            <!-- Content -->
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-indigo-400 transition-colors" data-i18n="p3_title">
+                                    Sude App
+                                </h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 mt-2.5 leading-relaxed" data-i18n="p3_desc">
+                                    Modern arayüz tasarımı ve yüksek performans odaklı mimariyle geliştirilmiş, Vercel bulut altyapısı üzerinde yayında olan duyarlı (responsive) Full-Stack web uygulaması.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6 pt-2">
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="px-2.5 py-1 rounded text-xs font-mono bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Next.js</span>
+                                <span class="px-2.5 py-1 rounded text-xs font-mono bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">React</span>
+                                <span class="px-2.5 py-1 rounded text-xs font-mono bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">TypeScript</span>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-slate-200/60 dark:border-slate-800 text-xs font-mono">
+                                <a href="https://sude-app.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1.5 font-semibold">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> <span data-i18n="visit_live">Siteyi Ziyaret Et</span>
+                                </a>
+                                <span class="text-slate-400">Web App</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 4: YOLOv8 Computer Vision Research & Detection System -->
+                    <article class="project-card glass-card rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition-all" data-category="ai">
+                        <div>
+                            <!-- Visual Banner -->
+                            <div class="h-44 bg-gradient-to-br from-slate-900 via-amber-950/60 to-emerald-950 p-6 flex flex-col justify-between relative overflow-hidden">
+                                <div class="flex justify-between items-start z-10">
+                                    <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30" data-i18n="p4_badge">Derin Öğrenme & CV</span>
+                                    <i class="fa-solid fa-eye text-2xl text-amber-400/80"></i>
+                                </div>
+                                <div class="border border-amber-400/30 rounded-lg p-2.5 bg-amber-500/10 z-10 flex items-center justify-between text-xs font-mono text-amber-200">
+                                    <span>YOLOv8 • Real-Time Detection</span>
+                                    <span class="text-emerald-400">96.4% mAP</span>
+                                </div>
+                            </div>
+                            <!-- Content -->
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-amber-400 transition-colors" data-i18n="p4_title">
+                                    YOLOv8 Gerçek Zamanlı Nesne Tespiti & Görüntü İşleme
+                                </h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 mt-2.5 leading-relaxed" data-i18n="p4_desc">
+                                    Python, OpenCV ve YOLOv8 derin öğrenme mimarisi kullanılarak özel veri setleri üzerinde eğitilmiş, gerçek zamanlı nesne tespiti ve görüntü analizi gerçekleştiren yapay zeka projesi.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6 pt-2">
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="px-2.5 py-1 rounded text-xs font-mono bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">YOLOv8</span>
+                                <span class="px-2.5 py-1 rounded text-xs font-mono bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Python</span>
+                                <span class="px-2.5 py-1 rounded text-xs font-mono bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">OpenCV</span>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-slate-200/60 dark:border-slate-800 text-xs font-mono">
+                                <span class="text-amber-600 dark:text-amber-400 flex items-center gap-1.5 font-semibold">
+                                    <i class="fa-solid fa-microchip"></i> <span data-i18n="p4_footer">Akademik & Ar-Ge Çalışması</span>
+                                </span>
+                                <span class="text-slate-400">Computer Vision</span>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 5.5 MANAGED SOCIAL MEDIA ACCOUNTS SECTION (Gözcü Mini Dizi) -->
+        <section id="managed-social" class="py-20 border-t border-slate-200/70 dark:border-slate-800/70">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                    <div>
+                        <span class="font-mono text-sm text-cyan-600 dark:text-cyan-400 uppercase tracking-wider" data-i18n="social_subtitle">05. DİJİTAL MEDYA & İÇERİK YÖNETİMİ</span>
+                        <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mt-1" data-i18n="social_title">Yönetilen Sosyal Medya Hesapları</h2>
+                    </div>
+                    <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-xl glass-card border border-cyan-500/30 self-start">
+                        <i class="fa-solid fa-film text-cyan-500"></i>
+                        <span class="font-mono text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200">Gözcü Mini Dizi (@gozcu.minidizi)</span>
+                    </div>
+                </div>
+
+                <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base max-w-3xl mb-10 leading-relaxed" data-i18n="social_desc">
+                    <strong class="text-slate-900 dark:text-white">Gözcü Mini Dizi</strong> projesinin tüm resmi sosyal medya kanallarında içerik planlaması, kitle etkileşimi ve çoklu platform dijital görünürlük yönetimini yürütmekteyim.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- YouTube Card -->
+                    <a href="https://www.youtube.com/@gozcu.minidizi" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-6 flex flex-col justify-between hover:border-red-500/50 transition-all transform hover:-translate-y-1 group">
+                        <div>
+                            <div class="flex items-center justify-between mb-5">
+                                <div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                    </svg>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-red-500 transition-colors"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-red-500 transition-colors">YouTube</h3>
+                            <p class="font-mono text-xs text-slate-500 dark:text-slate-400 mt-1">@gozcu.minidizi</p>
+                        </div>
+                        <div class="mt-6 pt-3 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between text-xs font-mono text-red-500">
+                            <span data-i18n="social_visit">Kanalı İncele</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
+                    </a>
+
+                    <!-- Instagram Card -->
+                    <a href="https://www.instagram.com/gozcu.minidizi/" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-6 flex flex-col justify-between hover:border-pink-500/50 transition-all transform hover:-translate-y-1 group">
+                        <div>
+                            <div class="flex items-center justify-between mb-5">
+                                <div class="w-12 h-12 rounded-xl bg-pink-500/10 text-pink-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                    </svg>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-pink-500 transition-colors"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-pink-500 transition-colors">Instagram</h3>
+                            <p class="font-mono text-xs text-slate-500 dark:text-slate-400 mt-1">@gozcu.minidizi</p>
+                        </div>
+                        <div class="mt-6 pt-3 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between text-xs font-mono text-pink-500">
+                            <span data-i18n="social_visit_profile">Profili İncele</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
+                    </a>
+
+                    <!-- TikTok Card -->
+                    <a href="https://www.tiktok.com/@gozcu.minidizi" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-6 flex flex-col justify-between hover:border-cyan-400/50 transition-all transform hover:-translate-y-1 group">
+                        <div>
+                            <div class="flex items-center justify-between mb-5">
+                                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-slate-900 dark:text-white flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                                    </svg>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-cyan-400 transition-colors"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-cyan-400 transition-colors">TikTok</h3>
+                            <p class="font-mono text-xs text-slate-500 dark:text-slate-400 mt-1">@gozcu.minidizi</p>
+                        </div>
+                        <div class="mt-6 pt-3 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between text-xs font-mono text-cyan-500 dark:text-cyan-400">
+                            <span data-i18n="social_visit_profile">Profili İncele</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
+                    </a>
+
+                    <!-- Facebook Card -->
+                    <a href="https://www.facebook.com/share/1MA8VvTpcu/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-6 flex flex-col justify-between hover:border-blue-500/50 transition-all transform hover:-translate-y-1 group">
+                        <div>
+                            <div class="flex items-center justify-between mb-5">
+                                <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                    </svg>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-blue-500 transition-colors"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-500 transition-colors">Facebook</h3>
+                            <p class="font-mono text-xs text-slate-500 dark:text-slate-400 mt-1">Gözcü Mini Dizi</p>
+                        </div>
+                        <div class="mt-6 pt-3 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between text-xs font-mono text-blue-500">
+                            <span data-i18n="social_visit_page">Sayfayı İncele</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. CONTACT SECTION -->
+        <section id="contact" class="py-20 bg-slate-100/60 dark:bg-slate-900/40 border-t border-slate-200/70 dark:border-slate-800/70">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="font-mono text-sm text-cyan-600 dark:text-cyan-400 uppercase tracking-wider" data-i18n="contact_subtitle">06. İLETİŞİM</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mt-1" data-i18n="contact_title">Birlikte Çalışalım</h2>
+                    <p class="text-slate-600 dark:text-slate-300 mt-3 text-sm sm:text-base" data-i18n="contact_desc">
+                        Full-Stack yazılım geliştirme, görüntü işleme projeleri veya mühendislik pozisyonları hakkında görüşmek için bana ulaşabilirsiniz.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <!-- Contact Info & Social Cards -->
+                    <div class="lg:col-span-5 space-y-4">
+                        <a href="https://www.linkedin.com/in/emirhan-y%C4%B1lmazkol-211831259/" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-5 flex items-center space-x-4 hover:border-cyan-500/50 transition-all group">
+                            <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center group-hover:scale-105 transition-transform">
+                                <i class="fa-brands fa-linkedin-in text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 dark:text-white text-sm">LinkedIn</h3>
+                                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">linkedin.com/in/emirhan-yılmazkol</p>
+                            </div>
+                        </a>
+
+                        <a href="https://www.instagram.com/emirhanyilmazkol/" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-5 flex items-center space-x-4 hover:border-pink-500/50 transition-all group">
+                            <div class="w-12 h-12 rounded-xl bg-pink-500/10 text-pink-500 flex items-center justify-center group-hover:scale-105 transition-transform">
+                                <i class="fa-brands fa-instagram text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 dark:text-white text-sm">Instagram</h3>
+                                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">@emirhanyilmazkol</p>
+                            </div>
+                        </a>
+
+                        <div class="glass-card rounded-2xl p-5 flex items-center justify-between gap-3 hover:border-emerald-500/50 transition-all group">
+                            <a href="tel:xxxxxxxxxxx" class="flex items-center space-x-4 min-w-0">
+                                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                    <i class="fa-solid fa-phone text-xl"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <h3 class="font-bold text-slate-900 dark:text-white text-sm" data-i18n="contact_phone_label">Telefon / GitHub</h3>
+                                    <p class="text-xs sm:text-sm font-mono text-slate-600 dark:text-slate-300 truncate">xxxxxxxxxxx</p>
+                                </div>
+                            </a>
+                            <button type="button" id="copyPhoneBtn" aria-label="Copy Phone Number" class="px-3 py-2 rounded-xl bg-slate-200/80 dark:bg-slate-800 hover:bg-emerald-500 hover:text-white text-slate-700 dark:text-slate-200 text-xs font-mono transition-colors shrink-0">
+                                <i id="copyPhoneIcon" class="fa-regular fa-copy"></i>
+                                <span id="copyPhoneText" class="ml-1" data-i18n="copy_btn">Kopyala</span>
+                            </button>
+                        </div>
+
+                        <div class="glass-card rounded-2xl p-5 flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-500 flex items-center justify-center">
+                                <i class="fa-solid fa-location-dot text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 dark:text-white text-sm" data-i18n="contact_loc_label">Konum</h3>
+                                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Antalya, Türkiye</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Contact Form -->
+                    <div class="lg:col-span-7 glass-card rounded-2xl p-6 sm:p-8">
+                        <form id="contactForm" class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="senderName" class="block text-xs font-mono text-slate-600 dark:text-slate-400 mb-1.5" data-i18n="form_name">Adınız Soyadınız</label>
+                                    <input type="text" id="senderName" required placeholder="Örn: Ahmet Yılmaz" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors">
+                                </div>
+                                <div>
+                                    <label for="senderEmail" class="block text-xs font-mono text-slate-600 dark:text-slate-400 mb-1.5" data-i18n="form_email">E-posta Adresiniz</label>
+                                    <input type="email" id="senderEmail" required placeholder="ornek@sirket.com" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="senderSubject" class="block text-xs font-mono text-slate-600 dark:text-slate-400 mb-1.5" data-i18n="form_subject">Konu</label>
+                                <input type="text" id="senderSubject" required placeholder="Örn: İş Teklifi / Proje İş Birliği" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors">
+                            </div>
+                            <div>
+                                <label for="senderMessage" class="block text-xs font-mono text-slate-600 dark:text-slate-400 mb-1.5" data-i18n="form_message">Mesajınız</label>
+                                <textarea id="senderMessage" rows="4" required placeholder="Merhaba Emirhan, projeniz / pozisyon hakkında görüşmek isterim..." class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors"></textarea>
+                            </div>
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <button type="submit" id="submitContactBtn" class="flex-1 py-3.5 px-5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-600 hover:to-emerald-600 text-white font-semibold shadow-lg shadow-cyan-500/20 transition-all flex items-center justify-center space-x-2">
+                                    <span id="submitBtnText" data-i18n="form_submit">Mesaj Gönder</span>
+                                    <i class="fa-solid fa-paper-plane text-xs"></i>
+                                </button>
+                                <button type="button" id="mailtoFallbackBtn" class="py-3.5 px-4 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100/80 dark:bg-slate-800/80 hover:border-cyan-500 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-medium transition-all flex items-center justify-center space-x-2" title="E-posta uygulamanızla doğrudan gönderin">
+                                    <i class="fa-solid fa-envelope text-cyan-500"></i>
+                                    <span data-i18n="form_mailto">E-posta Uygulamasıyla Aç</span>
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Custom Feedback Toast (Replaces alert) -->
+                        <div id="formFeedback" class="hidden mt-4 p-4 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-300 text-sm flex items-start space-x-3">
+                            <i class="fa-solid fa-circle-check text-lg mt-0.5"></i>
+                            <div class="space-y-1">
+                                <p id="formFeedbackText" data-i18n="form_success">Teşekkürler! Mesajınız Yönetim Paneline kaydedildi ve e-posta bildirim sistemi tetiklendi.</p>
+                                <p id="formEmailStatusText" class="text-xs font-mono opacity-85"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200/80 dark:border-slate-800/80 py-8 text-center text-sm text-slate-500 dark:text-slate-400">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="font-mono text-xs">
+                © 2026 <span class="text-slate-800 dark:text-slate-200 font-semibold">Emirhan Yılmazkol</span>. <span data-i18n="footer_rights">Tüm hakları saklıdır.</span>
+            </p>
+            <p class="font-mono text-xs text-slate-400">
+                Built with <span class="text-cyan-500">HTML</span>, <span class="text-emerald-500">Tailwind CSS</span> & <span class="text-indigo-400">Cloud Sync</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- ADMIN PANEL (YÖNETİM PANELİ) MODAL -->
+    <div id="adminModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-md">
+        <div class="w-full max-w-4xl max-h-[90vh] flex flex-col rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
+            
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500 to-emerald-500 flex items-center justify-center text-white">
+                        <i class="fa-solid fa-inbox"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 dark:text-white text-base sm:text-lg" data-i18n="admin_modal_title">Yönetim Paneli — Gelen Mesajlar</h3>
+                        <p class="font-mono text-xs text-slate-500 dark:text-slate-400" data-i18n="admin_modal_sub">Gerçek Zamanlı Mesaj Kutusu & E-posta Yönlendirme Ayarları</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button id="adminLogoutBtn" class="hidden px-3 py-1.5 rounded-lg text-xs font-mono bg-rose-500/10 text-rose-500 hover:bg-rose-500 hover:text-white transition-colors">
+                        <i class="fa-solid fa-right-from-bracket mr-1"></i> <span data-i18n="admin_logout">Kilitle</span>
+                    </button>
+                    <button id="closeAdminBtn" aria-label="Close Admin Panel" class="w-9 h-9 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:border-rose-500 hover:text-rose-500 transition-colors flex items-center justify-center">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- LOCK SCREEN (PIN LOGIN) -->
+            <div id="adminLoginView" class="p-8 sm:p-12 flex flex-col items-center justify-center text-center space-y-5">
+                <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-500 flex items-center justify-center text-2xl">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <div class="max-w-sm space-y-1.5">
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white" data-i18n="admin_lock_title">Yönetici Girişi</h4>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400" data-i18n="admin_lock_desc">
+                        Gelen iletişim mesajlarını görüntülemek ve e-posta yönlendirmesini yönetmek için erişim PIN kodunu girin.
+                    </p>
+                </div>
+                <form id="adminPinForm" class="w-full max-w-xs space-y-3">
+                    <input type="password" id="adminPinInput" maxlength="12" required placeholder="PIN Kodu" class="w-full px-4 py-3 rounded-xl text-center font-mono tracking-widest bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500">
+                    <p id="adminPinError" class="hidden text-xs text-rose-500 font-mono">Hatalı PIN kodu! Tekrar deneyin.</p>
+                    <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-600 hover:to-emerald-600 text-white font-semibold shadow-lg shadow-cyan-500/20 transition-all">
+                        <span data-i18n="admin_unlock_btn">Paneli Aç</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- DASHBOARD CONTENT (UNLOCKED) -->
+            <div id="adminDashboardView" class="hidden flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
+                
+                <!-- Email Forwarding & Security Settings Card -->
+                <div class="rounded-2xl p-4 sm:p-5 bg-slate-100/80 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-envelope-circle-check text-emerald-500"></i>
+                                <span data-i18n="admin_settings_title">Otomatik E-posta İletim & Güvenlik Ayarları</span>
+                            </h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5" data-i18n="admin_settings_desc">
+                                Ziyaretçiler form doldurduğunda mesaj hem bu panele düşer hem de aşağıya kaydettiğiniz e-posta adresine gönderilir. (İlk gönderimde FormSubmit aktivasyon mailini onaylamanız yeterlidir.)
+                            </p>
+                        </div>
+                        <span id="settingsSavedBadge" class="hidden px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-500 text-xs font-mono shrink-0">
+                            <i class="fa-solid fa-check mr-1"></i> Kaydedildi
+                        </span>
+                    </div>
+
+                    <form id="adminSettingsForm" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
+                        <div class="sm:col-span-6">
+                            <label class="block text-[11px] font-mono text-slate-500 dark:text-slate-400 mb-1" data-i18n="admin_target_email">Bildirim Alınacak E-posta (Gmail / Kurumsal)</label>
+                            <input type="email" id="adminTargetEmailInput" placeholder="emirhan@gmail.com" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-cyan-500">
+                        </div>
+                        <div class="sm:col-span-3">
+                            <label class="block text-[11px] font-mono text-slate-500 dark:text-slate-400 mb-1" data-i18n="admin_new_pin">Panel PIN Kodu</label>
+                            <input type="text" id="adminNewPinInput" maxlength="12" placeholder="1453" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white font-mono text-xs sm:text-sm focus:outline-none focus:border-cyan-500">
+                        </div>
+                        <div class="sm:col-span-3">
+                            <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs sm:text-sm font-semibold transition-colors">
+                                <i class="fa-solid fa-floppy-disk mr-1"></i> <span data-i18n="admin_save_btn">Ayarları Kaydet</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Inbox Filter & Stats Bar -->
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center space-x-2">
+                        <button id="inboxFilterAll" class="px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-cyan-500 text-white transition-colors">
+                            <span data-i18n="inbox_all">Tümü</span> (<span id="totalMsgCount">0</span>)
+                        </button>
+                        <button id="inboxFilterUnread" class="px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:border-cyan-500 transition-colors">
+                            <span data-i18n="inbox_unread">Okunmamış</span> (<span id="unreadMsgCount">0</span>)
+                        </button>
+                    </div>
+                    <span class="font-mono text-xs text-emerald-500 flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span data-i18n="inbox_realtime">Canlı Senkronizasyon Aktif</span>
+                    </span>
+                </div>
+
+                <!-- Messages List Container -->
+                <div id="adminMessagesList" class="space-y-3">
+                    <!-- Rendered dynamically via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Logic & Cloud Backend Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, doc, addDoc, setDoc, getDoc, updateDoc, deleteDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // 1. Dictionary for TR / EN Bilingual Support
+        const translations = {
+            tr: {
+                nav_about: "Ben Kimim?",
+                nav_skills: "Yetenekler",
+                nav_experience: "Eğitim & Deneyim",
+                nav_projects: "Projeler",
+                nav_managed_social: "Sosyal Medya",
+                nav_contact: "İletişim",
+                hero_badge: "Fuar Hastanesi • Bilgi İşlem Departmanı",
+                hero_greeting: "Merhaba, ben",
+                hero_role: "Bilgisayar Mühendisi | Bilgi İşlem & Full-Stack Yazılım Geliştirici",
+                hero_desc: "Süleyman Demirel Üniversitesi Bilgisayar Mühendisliği mezunuyum (3.42/4.00). Şu anda Fuar Hastanesi Bilgi İşlem bölümünde görev almakta olup; Beyaz Belgelendirme'deki yazılım geliştirme, TCDD Teknik yazılım otomasyonu ve YOLOv8 tabanlı görüntü işleme deneyimlerimle uçtan uca teknolojik çözümler üretiyorum.",
+                btn_projects: "Projelerimi İncele",
+                btn_contact: "İletişime Geç",
+                about_subtitle: "01. HAKKIMDA",
+                about_title: "Ben Kimim?",
+                about_tagline: "Teorik Mühendislik + Kurumsal & Saha Deneyimi",
+                about_p1: "Süleyman Demirel Üniversitesi Bilgisayar Mühendisliği bölümünden <strong class='text-slate-900 dark:text-white font-semibold'>3.42 / 4.00</strong> not ortalamasıyla mezun oldum. Şu anda <strong class='text-emerald-600 dark:text-emerald-400 font-semibold'>Fuar Hastanesi Bilgi İşlem</strong> departmanında aktif olarak görev almakta; hastane bilgi yönetim sistemleri (HBYS), kurumsal ağ/sistem altyapısı ve yazılım süreçlerinin kesintisiz işleyişini sağlamaktayım.",
+                about_p2: "Daha önce <strong class='text-slate-900 dark:text-white font-semibold'>Beyaz Belgelendirme</strong> bünyesinde yazılımcı olarak görev alarak kurumsal web yazılımı geliştirme ve veritabanı süreçlerinde aktif sorumluluk üstlendim. Full-Stack geliştirici olarak <strong class='text-cyan-600 dark:text-cyan-400 font-medium'>React, Next.js, TypeScript, Spring Boot, Python ve SQL</strong> teknolojilerinde güçlü bir altyapıya sahibim. Bununla birlikte yapay zeka ve görüntü işleme alanlarına odaklanarak <strong class='text-indigo-600 dark:text-indigo-400 font-medium'>YOLOv8</strong> derin öğrenme modelleriyle nesne tespiti projeleri geliştirdim.",
+                about_p3: "<strong class='text-slate-900 dark:text-white font-semibold'>TCDD Teknik</strong> bünyesinde tamamladığım staj ile kurumun yazılım otomasyonu ve operasyonel iş akışlarına hakimiyet kazandım. Ayrıca endüstriyel otomasyon ve saha uygulamaları stajım sayesinde teorik mühendislik bilgimi gerçek saha koşullarında uygulama fırsatı buldum. Analitik düşünme becerileri gelişmiş, takım çalışmasına yatkın ve sürekli öğrenmeye açık bir mühendis olarak değer üretmeye devam ediyorum.",
+                stat_current_title: "Fuar Hastanesi",
+                stat_current_desc: "Bilgi İşlem Departmanı (Aktif Görev)",
+                stat_gpa: "Mezuniyet Not Ortalaması (SDÜ Bilgisayar Müh.)",
+                stat_fullstack_title: "Full-Stack & AI",
+                stat_fullstack_desc: "React, Next.js, Spring Boot, Python & YOLOv8",
+                stat_field_title: "Yazılım & Saha Otomasyonu",
+                stat_field_desc: "TCDD Teknik Yazılım Otomasyonu & Endüstriyel Sistemler",
+                skills_subtitle: "02. TEKNOLOJİ YIĞINI",
+                skills_title: "Teknik Yetkinlikler",
+                skill_cat_frontend: "Frontend Geliştirme",
+                skill_cat_backend: "Backend & Veritabanı",
+                skill_cat_ai: "Yapay Zeka & Görüntü İşleme",
+                skill_cat_eng: "Otomasyon & Mühendislik",
+                tag_tcdd: "TCDD Teknik Yazılım Otomasyonu",
+                tag_automation: "Endüstriyel Otomasyon",
+                tag_field: "Saha Uygulamaları",
+                tag_research: "Akademik Araştırma",
+                exp_subtitle: "03. YOLCULUĞUM",
+                exp_title: "Eğitim & İş Deneyimleri",
+                fuar_badge: "Güncel • Aktif Görev",
+                fuar_type: "Hastane Bilgi Sistemleri & IT Altyapısı",
+                fuar_role: "Bilgi İşlem Uzmanı / Mühendisi",
+                fuar_company: "Fuar Hastanesi — Bilgi İşlem Departmanı",
+                fuar_desc: "Fuar Hastanesi Bilgi İşlem bölümünde aktif olarak görev almaktayım. Hastane Bilgi Yönetim Sistemleri (HBYS) süreçlerinin yönetimi, sunucu/ağ altyapısı desteği, veritabanı ve yazılım sorunlarının giderilmesi ile sağlık teknolojileri sistemlerinin kesintisiz ve güvenli çalışmasını sağlamaktayım.",
+                beyaz_badge: "Profesyonel Deneyim • 1.5 Ay",
+                beyaz_type: "Full-Stack Yazılım Geliştirme",
+                beyaz_role: "Yazılımcı (Software Developer)",
+                beyaz_company: "Beyaz Belgelendirme",
+                beyaz_desc: "Beyaz Belgelendirme bünyesinde 1,5 ay boyunca yazılımcı olarak görev aldım. Kurumsal belgelendirme süreçlerine yönelik web tabanlı yazılım modüllerinin geliştirilmesi, veritabanı işlemleri, arayüz iyileştirmeleri ve backend entegrasyonları üzerinde aktif olarak çalıştım.",
+                tcdd_badge: "Kurumsal Mühendislik Stajı",
+                tcdd_type: "Yazılım Otomasyonu & Kurumsal Sistemler",
+                tcdd_role: "Yazılım Otomasyonu Stajyeri",
+                tcdd_company: "TCDD Teknik Mühendislik ve Müşavirlik A.Ş.",
+                tcdd_desc: "TCDD Teknik bünyesinde gerçekleştirdiğim staj süresince kurumun yazılım otomasyon altyapısını, kurumsal yazılım süreçlerini ve operasyonel sistem iş akışlarını yakından deneyimledim. Kurumsal yazılım otomasyon araçlarına hakimiyet kazanarak veri yönetimi, süreç otomasyonu ve yazılım geliştirme standartları üzerine pratik yetkinlikler edindim.",
+                intern_badge: "Mühendislik Stajı",
+                intern_type: "Saha & Sistem Entegrasyonu",
+                intern_role: "Endüstriyel Otomasyon & Saha Uygulamaları Stajyeri",
+                intern_sub: "Endüstriyel Kontrol ve Yazılım Uygulamaları",
+                intern_desc: "Gerçek saha ortamlarında endüstriyel otomasyon süreçlerinin izlenmesi, donanım-yazılım haberleşmesi ve saha uygulamalarının devreye alınması süreçlerinde aktif rol aldım. Teorik mühendislik bilgilerini endüstriyel problemlere entegre ederek pratik çözüm üretme deneyimi kazandım.",
+                edu_badge: "Lisans Eğitimi • Mezun",
+                edu_degree: "Bilgisayar Mühendisliği (B.Sc.)",
+                edu_desc: "Algoritmalar, veri yapıları, veritabanı yönetim sistemleri, yazılım mühendisliği ve yapay zeka alanlarında güçlü bir teorik ve pratik altyapı edindim. Akademik araştırmalar yürüterek görüntü işleme ve derin öğrenme modelleri üzerine bitirme/araştırma projeleri geliştirdim.",
+                proj_subtitle: "04. ÇALIŞMALARIM",
+                proj_title: "Öne Çıkan Projeler",
+                filter_all: "Tümü",
+                filter_fullstack: "Full-Stack",
+                filter_ai: "AI / Görüntü İşleme",
+                p1_badge: "Canlı Platform",
+                p1_title: "Deneme Soruları Platformu",
+                p1_desc: "Öğrencilerin sınavlara hazırlık süreçlerini destekleyen, çevrimiçi deneme testleri çözebildiği ve performanslarını takip edebildiği kapsamlı eğitim ve soru platformu.",
+                p2_badge: "Sınav Yönetimi",
+                p2_title: "Ortak Yazılı Sınav Sistemi",
+                p2_desc: "Ortak yazılı sınavların planlanması, dijital ortamda yönetilmesi ve ölçme-değerlendirme süreçlerinin sistematik şekilde yürütülmesini sağlayan web tabanlı sınav yönetim sistemi.",
+                p3_badge: "Modern Web App",
+                p3_title: "Sude App",
+                p3_desc: "Modern arayüz tasarımı ve yüksek performans odaklı mimariyle geliştirilmiş, Vercel bulut altyapısı üzerinde yayında olan duyarlı (responsive) Full-Stack web uygulaması.",
+                p4_badge: "Derin Öğrenme & CV",
+                p4_title: "YOLOv8 Gerçek Zamanlı Nesne Tespiti & Görüntü İşleme",
+                p4_desc: "Python, OpenCV ve YOLOv8 derin öğrenme mimarisi kullanılarak özel veri setleri üzerinde eğitilmiş, gerçek zamanlı nesne tespiti ve görüntü analizi gerçekleştiren yapay zeka projesi.",
+                p4_footer: "Akademik & Ar-Ge Çalışması",
+                visit_live: "Siteyi Ziyaret Et",
+                social_subtitle: "05. DİJİTAL MEDYA & İÇERİK YÖNETİMİ",
+                social_title: "Yönetilen Sosyal Medya Hesapları",
+                social_desc: "<strong class='text-slate-900 dark:text-white'>Gözcü Mini Dizi</strong> projesinin tüm resmi sosyal medya kanallarında içerik planlaması, kitle etkileşimi ve çoklu platform dijital görünürlük yönetimini yürütmekteyim.",
+                social_visit: "Kanalı İncele",
+                social_visit_profile: "Profili İncele",
+                social_visit_page: "Sayfayı İncele",
+                contact_subtitle: "06. İLETİŞİM",
+                contact_title: "Birlikte Çalışalım",
+                contact_desc: "Full-Stack yazılım geliştirme, görüntü işleme projeleri veya mühendislik pozisyonları hakkında görüşmek için bana ulaşabilirsiniz.",
+                contact_phone_label: "Telefon Numarası",
+                copy_btn: "Kopyala",
+                copied_btn: "Kopyalandı",
+                contact_loc_label: "Konum",
+                form_name: "Adınız Soyadınız",
+                form_email: "E-posta Adresiniz",
+                form_subject: "Konu",
+                form_message: "Mesajınız",
+                form_submit: "Mesaj Gönder",
+                form_mailto: "E-posta Uygulamasıyla Aç",
+                form_success: "Teşekkürler! Mesajınız Yönetim Paneline başarıyla iletildi.",
+                footer_rights: "Tüm hakları saklıdır.",
+                admin_modal_title: "Yönetim Paneli — Gelen Mesajlar",
+                admin_modal_sub: "Gerçek Zamanlı Mesaj Kutusu & E-posta Yönlendirme Ayarları",
+                admin_logout: "Kilitle",
+                admin_lock_title: "Yönetici Girişi",
+                admin_lock_desc: "Gelen iletişim mesajlarını görüntülemek ve e-posta yönlendirmesini yönetmek için erişim PIN kodunu girin.",
+                admin_unlock_btn: "Paneli Aç",
+                admin_settings_title: "Otomatik E-posta İletim & Güvenlik Ayarları",
+                admin_settings_desc: "Ziyaretçiler form doldurduğunda mesaj hem bu panele düşer hem de aşağıya kaydettiğiniz e-posta adresine gönderilir. (İlk gönderimde FormSubmit aktivasyon mailini onaylamanız yeterlidir.)",
+                admin_target_email: "Bildirim Alınacak E-posta (Gmail / Kurumsal)",
+                admin_new_pin: "Panel PIN Kodu",
+                admin_save_btn: "Ayarları Kaydet",
+                inbox_all: "Tümü",
+                inbox_unread: "Okunmamış",
+                inbox_realtime: "Canlı Senkronizasyon Aktif"
+            },
+            en: {
+                nav_about: "About Me",
+                nav_skills: "Skills",
+                nav_experience: "Education & Exp",
+                nav_projects: "Projects",
+                nav_managed_social: "Social Media",
+                nav_contact: "Contact",
+                hero_badge: "Fuar Hospital • IT Department",
+                hero_greeting: "Hello, I am",
+                hero_role: "Computer Engineer | IT Specialist & Full-Stack Developer",
+                hero_desc: "Computer Engineering graduate from Süleyman Demirel University (GPA: 3.42/4.00). Currently working in the IT Department at Fuar Hospital, building end-to-end technological solutions backed by software development at Beyaz Belgelendirme, TCDD Teknik software automation, and YOLOv8 computer vision.",
+                btn_projects: "View Projects",
+                btn_contact: "Contact Me",
+                about_subtitle: "01. ABOUT ME",
+                about_title: "Who Am I?",
+                about_tagline: "Theoretical Engineering + Enterprise & Field Experience",
+                about_p1: "I graduated from Süleyman Demirel University with a B.Sc. in Computer Engineering and a strong academic record (<strong class='text-slate-900 dark:text-white font-semibold'>GPA: 3.42 / 4.00</strong>). Currently, I work in the <strong class='text-emerald-600 dark:text-emerald-400 font-semibold'>IT Department at Fuar Hospital</strong>, managing hospital information systems (HIS), enterprise network/server infrastructure, and software operations.",
+                about_p2: "Previously, I worked as a Software Developer at <strong class='text-slate-900 dark:text-white font-semibold'>Beyaz Belgelendirme</strong>, taking active responsibility in corporate web software modules and database operations. As a Full-Stack Developer, I have solid hands-on expertise in <strong class='text-cyan-600 dark:text-cyan-400 font-medium'>React, Next.js, TypeScript, Spring Boot, Python, and SQL</strong>. Alongside web engineering, I develop Computer Vision and Deep Learning pipelines utilizing models such as <strong class='text-indigo-600 dark:text-indigo-400 font-medium'>YOLOv8</strong>.",
+                about_p3: "Through my internship at <strong class='text-slate-900 dark:text-white font-semibold'>TCDD Teknik</strong>, I gained strong proficiency in software automation systems and operational workflows. Additionally, my internship in industrial automation and field applications allowed me to bridge software and hardware environments in real-world conditions. Driven by analytical problem-solving, teamwork, and continuous learning, I strive to build impactful solutions.",
+                stat_current_title: "Fuar Hospital",
+                stat_current_desc: "IT Department (Current Role)",
+                stat_gpa: "Graduation GPA (SDU Computer Engineering)",
+                stat_fullstack_title: "Full-Stack & AI",
+                stat_fullstack_desc: "React, Next.js, Spring Boot, Python & YOLOv8",
+                stat_field_title: "Software & Field Automation",
+                stat_field_desc: "TCDD Teknik Software Automation & Industrial Systems",
+                skills_subtitle: "02. TECH STACK",
+                skills_title: "Technical Skills",
+                skill_cat_frontend: "Frontend Development",
+                skill_cat_backend: "Backend & Databases",
+                skill_cat_ai: "AI & Computer Vision",
+                skill_cat_eng: "Automation & Engineering",
+                tag_tcdd: "TCDD Teknik Software Automation",
+                tag_automation: "Industrial Automation",
+                tag_field: "Field Applications",
+                tag_research: "Academic Research",
+                exp_subtitle: "03. MY JOURNEY",
+                exp_title: "Education & Work Experience",
+                fuar_badge: "Present • Active Role",
+                fuar_type: "Hospital Information Systems & IT Infrastructure",
+                fuar_role: "IT Specialist / Computer Engineer",
+                fuar_company: "Fuar Hospital — IT Department",
+                fuar_desc: "Currently working in the IT Department at Fuar Hospital. Responsible for Hospital Information Management Systems (HIS), server and network infrastructure support, software troubleshooting, and ensuring uninterrupted healthcare IT operations.",
+                beyaz_badge: "Professional Experience • 1.5 Months",
+                beyaz_type: "Full-Stack Software Development",
+                beyaz_role: "Software Developer",
+                beyaz_company: "Beyaz Belgelendirme",
+                beyaz_desc: "Worked as a Software Developer at Beyaz Belgelendirme for 1.5 months. Actively contributed to web-based corporate certification modules, database operations, UI enhancements, and backend integrations.",
+                tcdd_badge: "Enterprise Engineering Internship",
+                tcdd_type: "Software Automation & Enterprise Systems",
+                tcdd_role: "Software Automation Intern",
+                tcdd_company: "TCDD Teknik Engineering and Consultancy Inc.",
+                tcdd_desc: "During my internship at TCDD Teknik, I gained hands-on mastery of the company's software automation infrastructure, enterprise software workflows, and operational systems. Developed strong practical skills in enterprise process automation, data management, and railway engineering software standards.",
+                intern_badge: "Engineering Internship",
+                intern_type: "Field & System Integration",
+                intern_role: "Industrial Automation & Field Applications Intern",
+                intern_sub: "Industrial Control & Software Systems",
+                intern_desc: "Actively participated in monitoring industrial automation workflows, software-hardware communication, and commissioning field applications in real-world environments. Bridged academic engineering principles with practical industrial problem-solving.",
+                edu_badge: "Bachelor's Degree • Graduated",
+                edu_degree: "B.Sc. in Computer Engineering",
+                edu_desc: "Built a strong theoretical and practical foundation in algorithms, data structures, database management systems, software engineering, and artificial intelligence. Conducted academic research and developed computer vision projects using deep learning architectures.",
+                proj_subtitle: "04. PORTFOLIO",
+                proj_title: "Featured Projects",
+                filter_all: "All",
+                filter_fullstack: "Full-Stack",
+                filter_ai: "AI / Computer Vision",
+                p1_badge: "Live Platform",
+                p1_title: "Deneme Soruları Platform",
+                p1_desc: "A comprehensive online exam preparation platform enabling students to take practice tests and track their academic progress.",
+                p2_badge: "Exam Management",
+                p2_title: "Ortak Yazılı Sınav Sistemi",
+                p2_desc: "A web-based common written exam management and assessment platform built to streamline exam planning and evaluation workflows.",
+                p3_badge: "Modern Web App",
+                p3_title: "Sude App",
+                p3_desc: "A responsive, high-performance modern full-stack web application deployed on Vercel cloud infrastructure.",
+                p4_badge: "Deep Learning & CV",
+                p4_title: "YOLOv8 Real-Time Object Detection & Computer Vision",
+                p4_desc: "An AI computer vision pipeline trained on custom datasets using Python, OpenCV, and YOLOv8 deep learning architecture for real-time object detection and visual analysis.",
+                p4_footer: "Academic & R&D Project",
+                visit_live: "Visit Live Site",
+                social_subtitle: "05. DIGITAL MEDIA & CONTENT MANAGEMENT",
+                social_title: "Managed Social Media Accounts",
+                social_desc: "I manage content strategy, audience engagement, and cross-platform digital presence across all official social media channels for <strong class='text-slate-900 dark:text-white'>Gözcü Mini Dizi</strong>.",
+                social_visit: "Visit Channel",
+                social_visit_profile: "Visit Profile",
+                social_visit_page: "Visit Page",
+                contact_subtitle: "06. CONTACT",
+                contact_title: "Let's Work Together",
+                contact_desc: "Feel free to reach out to discuss Full-Stack development, Computer Vision projects, or software engineering opportunities.",
+                contact_phone_label: "Phone Number",
+                copy_btn: "Copy",
+                copied_btn: "Copied",
+                contact_loc_label: "Location",
+                form_name: "Your Name",
+                form_email: "Email Address",
+                form_subject: "Subject",
+                form_message: "Your Message",
+                form_submit: "Send Message",
+                form_mailto: "Open in Email App",
+                form_success: "Thank you! Your message has been delivered to the Admin Inbox.",
+                footer_rights: "All rights reserved.",
+                admin_modal_title: "Admin Panel — Incoming Messages",
+                admin_modal_sub: "Real-Time Message Inbox & Email Forwarding Settings",
+                admin_logout: "Lock",
+                admin_lock_title: "Admin Access",
+                admin_lock_desc: "Enter the access PIN code to view incoming contact messages and configure email forwarding.",
+                admin_unlock_btn: "Unlock Panel",
+                admin_settings_title: "Automatic Email Forwarding & Security Settings",
+                admin_settings_desc: "When visitors submit the contact form, messages appear in this inbox and are forwarded to your configured email address below.",
+                admin_target_email: "Notification Email Address (Gmail / Work)",
+                admin_new_pin: "Panel PIN Code",
+                admin_save_btn: "Save Settings",
+                inbox_all: "All",
+                inbox_unread: "Unread",
+                inbox_realtime: "Real-Time Sync Active"
+            }
+        };
+
+        let currentLang = 'tr';
+
+        // DOM Elements
+        const langToggleBtn = document.getElementById('langToggle');
+        const currentLangLabel = document.getElementById('currentLangLabel');
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+        const contactForm = document.getElementById('contactForm');
+        const formFeedback = document.getElementById('formFeedback');
+        const formFeedbackText = document.getElementById('formFeedbackText');
+        const formEmailStatusText = document.getElementById('formEmailStatusText');
+        const submitContactBtn = document.getElementById('submitContactBtn');
+        const submitBtnText = document.getElementById('submitBtnText');
+        const mailtoFallbackBtn = document.getElementById('mailtoFallbackBtn');
+
+        // 2. Language Switcher Handler
+        function updateLanguage(lang) {
+            currentLang = lang;
+            currentLangLabel.textContent = lang.toUpperCase();
+            document.documentElement.lang = lang;
+
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            renderAdminMessages();
+        }
+
+        langToggleBtn.addEventListener('click', () => {
+            const nextLang = currentLang === 'tr' ? 'en' : 'tr';
+            updateLanguage(nextLang);
+        });
+
+        // 3. Dark / Light Theme Switcher
+        themeToggleBtn.addEventListener('click', () => {
+            const htmlEl = document.documentElement;
+            if (htmlEl.classList.contains('dark')) {
+                htmlEl.classList.remove('dark');
+                themeIcon.classList.remove('fa-sun', 'text-amber-400');
+                themeIcon.classList.add('fa-moon', 'text-slate-700');
+            } else {
+                htmlEl.classList.add('dark');
+                themeIcon.classList.remove('fa-moon', 'text-slate-700');
+                themeIcon.classList.add('fa-sun', 'text-amber-400');
+            }
+        });
+
+        // 4. Mobile Menu Toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 5. Project Filter Tabs
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-cyan-500', 'text-white');
+                    b.classList.add('text-slate-600', 'dark:text-slate-300');
+                });
+                btn.classList.add('bg-cyan-500', 'text-white');
+                btn.classList.remove('text-slate-600', 'dark:text-slate-300');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    const categories = card.getAttribute('data-category');
+                    if (filterValue === 'all' || categories.includes(filterValue)) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // 6. Copy Phone Number Handler
+        const copyPhoneBtn = document.getElementById('copyPhoneBtn');
+        const copyPhoneIcon = document.getElementById('copyPhoneIcon');
+        const copyPhoneText = document.getElementById('copyPhoneText');
+
+        if (copyPhoneBtn) {
+            copyPhoneBtn.addEventListener('click', () => {
+                const phoneNumber = '+90 545 805 3179';
+                const tempInput = document.createElement('input');
+                tempInput.value = phoneNumber;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                try {
+                    document.execCommand('copy');
+                } catch (err) {}
+                document.body.removeChild(tempInput);
+
+                copyPhoneIcon.classList.remove('fa-copy', 'fa-regular');
+                copyPhoneIcon.classList.add('fa-check', 'fa-solid', 'text-emerald-500');
+                copyPhoneText.textContent = translations[currentLang].copied_btn;
+
+                setTimeout(() => {
+                    copyPhoneIcon.classList.remove('fa-check', 'fa-solid', 'text-emerald-500');
+                    copyPhoneIcon.classList.add('fa-regular', 'fa-copy');
+                    copyPhoneText.textContent = translations[currentLang].copy_btn;
+                }, 2500);
+            });
+        }
+
+        // 7. Firebase Cloud Setup + Dual Contact Delivery + Admin Panel (Yönetim Paneli)
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'emirhan-portfolio-app';
+        let db = null;
+        let auth = null;
+        let currentUser = null;
+
+        let messagesCache = [];
+        let adminConfig = {
+            targetEmail: '',
+            pinCode: '1453'
+        };
+        let isAdminUnlocked = false;
+        let inboxFilter = 'all';
+
+        // Admin Modal DOM Refs
+        const adminModal = document.getElementById('adminModal');
+        const closeAdminBtn = document.getElementById('closeAdminBtn');
+        const adminLogoutBtn = document.getElementById('adminLogoutBtn');
+        const adminLoginView = document.getElementById('adminLoginView');
+        const adminDashboardView = document.getElementById('adminDashboardView');
+        const adminPinForm = document.getElementById('adminPinForm');
+        const adminPinInput = document.getElementById('adminPinInput');
+        const adminPinError = document.getElementById('adminPinError');
+        const adminSettingsForm = document.getElementById('adminSettingsForm');
+        const adminTargetEmailInput = document.getElementById('adminTargetEmailInput');
+        const adminNewPinInput = document.getElementById('adminNewPinInput');
+        const settingsSavedBadge = document.getElementById('settingsSavedBadge');
+        const adminMessagesList = document.getElementById('adminMessagesList');
+        const totalMsgCount = document.getElementById('totalMsgCount');
+        const unreadMsgCount = document.getElementById('unreadMsgCount');
+        const inboxFilterAll = document.getElementById('inboxFilterAll');
+        const inboxFilterUnread = document.getElementById('inboxFilterUnread');
+
+        function escapeHTML(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function formatTimestamp(ts) {
+            if (!ts) return new Date().toLocaleString('tr-TR');
+            if (typeof ts.toDate === 'function') {
+                return ts.toDate().toLocaleString(currentLang === 'tr' ? 'tr-TR' : 'en-US');
+            }
+            return new Date(ts).toLocaleString(currentLang === 'tr' ? 'tr-TR' : 'en-US');
+        }
+
+        function updateUnreadBadges() {
+            const unread = messagesCache.filter(m => !m.read).length;
+            if (totalMsgCount) totalMsgCount.textContent = messagesCache.length;
+            if (unreadMsgCount) unreadMsgCount.textContent = unread;
+        }
+
+        function renderAdminMessages() {
+            updateUnreadBadges();
+            if (!adminMessagesList) return;
+
+            const filtered = inboxFilter === 'unread'
+                ? messagesCache.filter(m => !m.read)
+                : messagesCache;
+
+            if (filtered.length === 0) {
+                adminMessagesList.innerHTML = `
+                    <div class="text-center py-12 rounded-2xl border border-dashed border-slate-300 dark:border-slate-800 text-slate-500 dark:text-slate-400">
+                        <i class="fa-regular fa-envelope-open text-3xl mb-3 opacity-60"></i>
+                        <p class="text-sm font-medium">${currentLang === 'tr' ? 'Henüz görüntülenecek mesaj bulunmuyor.' : 'No messages to display yet.'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            adminMessagesList.innerHTML = filtered.map(msg => {
+                const isUnread = !msg.read;
+                const replySubject = encodeURIComponent(`Re: ${msg.subject || 'Portfolyo İletişim'}`);
+                const replyBody = encodeURIComponent(`\n\n--- Orijinal Mesaj (${msg.name}) ---\n${msg.message}`);
+                return `
+                    <div class="rounded-2xl p-4 sm:p-5 border transition-all ${isUnread ? 'bg-cyan-500/5 border-cyan-500/40' : 'bg-slate-50 dark:bg-slate-950/50 border-slate-200 dark:border-slate-800'}">
+                        <div class="flex flex-wrap items-start justify-between gap-2 mb-2">
+                            <div class="flex items-center gap-2.5">
+                                ${isUnread ? '<span class="w-2.5 h-2.5 rounded-full bg-cyan-500 shrink-0" title="Okunmamış"></span>' : ''}
+                                <div>
+                                    <h5 class="font-bold text-slate-900 dark:text-white text-sm sm:text-base">${escapeHTML(msg.name)}</h5>
+                                    <a href="mailto:${escapeHTML(msg.email)}" class="text-xs font-mono text-cyan-600 dark:text-cyan-400 hover:underline">${escapeHTML(msg.email)}</a>
+                                </div>
+                            </div>
+                            <span class="font-mono text-[11px] text-slate-500 dark:text-slate-400">${formatTimestamp(msg.createdAt)}</span>
+                        </div>
+                        <p class="text-xs font-mono font-semibold text-slate-700 dark:text-slate-200 mb-2">
+                            ${escapeHTML(msg.subject || 'Konu Belirtilmedi')}
+                        </p>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 whitespace-pre-line leading-relaxed mb-4 bg-white/70 dark:bg-slate-900/70 p-3 rounded-xl border border-slate-200/70 dark:border-slate-800">
+                            ${escapeHTML(msg.message)}
+                        </p>
+                        <div class="flex flex-wrap items-center justify-end gap-2 text-xs font-mono">
+                            <a href="mailto:${escapeHTML(msg.email)}?subject=${replySubject}&body=${replyBody}" class="px-3 py-1.5 rounded-lg bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500 hover:text-white transition-colors">
+                                <i class="fa-solid fa-reply mr-1"></i> ${currentLang === 'tr' ? 'Yanıtla' : 'Reply'}
+                            </a>
+                            <button type="button" data-action="toggle-read" data-id="${msg.id}" data-read="${msg.read ? '1' : '0'}" class="px-3 py-1.5 rounded-lg bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:border-cyan-500 transition-colors">
+                                <i class="fa-solid ${isUnread ? 'fa-check-double' : 'fa-envelope'} mr-1"></i> ${isUnread ? (currentLang === 'tr' ? 'Okundu İşaretle' : 'Mark Read') : (currentLang === 'tr' ? 'Okunmadı Yap' : 'Mark Unread')}
+                            </button>
+                            <button type="button" data-action="delete" data-id="${msg.id}" class="px-3 py-1.5 rounded-lg bg-rose-500/10 text-rose-500 hover:bg-rose-500 hover:text-white transition-colors">
+                                <i class="fa-solid fa-trash-can mr-1"></i> ${currentLang === 'tr' ? 'Sil' : 'Delete'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Open / Close Admin Modal & Route Detection (/yonetim)
+        function isYonetimRoute() {
+            const cleanPath = window.location.pathname.replace(/\/+$/, '').toLowerCase();
+            const hash = window.location.hash.toLowerCase();
+            const params = new URLSearchParams(window.location.search);
+            return cleanPath.endsWith('/yonetim') || hash === '#yonetim' || params.has('yonetim');
+        }
+
+        function closeAdminModal() {
+            adminModal.classList.add('hidden');
+            // Clean URL back to root if opened via /yonetim, #yonetim, or ?yonetim
+            if (isYonetimRoute()) {
+                try {
+                    const cleanPath = window.location.pathname.replace(/\/yonetim\/?$/i, '/') || '/';
+                    window.history.replaceState({}, document.title, cleanPath);
+                } catch (e) {
+                    window.location.hash = '';
+                }
+            }
+        }
+
+        function openAdminModal() {
+            adminModal.classList.remove('hidden');
+            adminPinError.classList.add('hidden');
+            if (isAdminUnlocked) {
+                adminLoginView.classList.add('hidden');
+                adminDashboardView.classList.remove('hidden');
+                adminLogoutBtn.classList.remove('hidden');
+                adminTargetEmailInput.value = adminConfig.targetEmail || '';
+                adminNewPinInput.value = adminConfig.pinCode || '1453';
+                renderAdminMessages();
+            } else {
+                adminLoginView.classList.remove('hidden');
+                adminDashboardView.classList.add('hidden');
+                adminLogoutBtn.classList.add('hidden');
+                adminPinInput.value = '';
+                setTimeout(() => adminPinInput.focus(), 100);
+            }
+        }
+
+        closeAdminBtn.addEventListener('click', closeAdminModal);
+        adminModal.addEventListener('click', (e) => {
+            if (e.target === adminModal) closeAdminModal();
+        });
+
+        window.addEventListener('popstate', () => {
+            if (isYonetimRoute()) openAdminModal();
+        });
+        window.addEventListener('hashchange', () => {
+            if (isYonetimRoute()) openAdminModal();
+        });
+
+        if (isYonetimRoute()) {
+            openAdminModal();
+        }
+
+        adminLogoutBtn.addEventListener('click', () => {
+            isAdminUnlocked = false;
+            openAdminModal();
+        });
+
+        adminPinForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const entered = adminPinInput.value.trim();
+            if (entered === (adminConfig.pinCode || '1453')) {
+                isAdminUnlocked = true;
+                adminPinError.classList.add('hidden');
+                openAdminModal();
+            } else {
+                adminPinError.classList.remove('hidden');
+            }
+        });
+
+        inboxFilterAll.addEventListener('click', () => {
+            inboxFilter = 'all';
+            inboxFilterAll.classList.add('bg-cyan-500', 'text-white');
+            inboxFilterAll.classList.remove('bg-slate-200', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+            inboxFilterUnread.classList.remove('bg-cyan-500', 'text-white');
+            inboxFilterUnread.classList.add('bg-slate-200', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+            renderAdminMessages();
+        });
+
+        inboxFilterUnread.addEventListener('click', () => {
+            inboxFilter = 'unread';
+            inboxFilterUnread.classList.add('bg-cyan-500', 'text-white');
+            inboxFilterUnread.classList.remove('bg-slate-200', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+            inboxFilterAll.classList.remove('bg-cyan-500', 'text-white');
+            inboxFilterAll.classList.add('bg-slate-200', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+            renderAdminMessages();
+        });
+
+        // Message Actions (Mark Read/Unread & Delete)
+        adminMessagesList.addEventListener('click', async (e) => {
+            const btn = e.target.closest('button[data-action]');
+            if (!btn || !db || !currentUser) return;
+
+            const action = btn.getAttribute('data-action');
+            const msgId = btn.getAttribute('data-id');
+            const msgRef = doc(db, 'artifacts', appId, 'public', 'data', 'contact_messages', msgId);
+
+            try {
+                if (action === 'toggle-read') {
+                    const currentlyRead = btn.getAttribute('data-read') === '1';
+                    await updateDoc(msgRef, { read: !currentlyRead });
+                } else if (action === 'delete') {
+                    await deleteDoc(msgRef);
+                }
+            } catch (err) {
+                console.error('Message update error:', err);
+            }
+        });
+
+        // Save Admin Settings (Target Email + PIN)
+        adminSettingsForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const newEmail = adminTargetEmailInput.value.trim();
+            const newPin = adminNewPinInput.value.trim() || '1453';
+            adminConfig.targetEmail = newEmail;
+            adminConfig.pinCode = newPin;
+
+            if (db && currentUser) {
+                try {
+                    const settingsRef = doc(db, 'artifacts', appId, 'public', 'data', 'admin_settings', 'config');
+                    await setDoc(settingsRef, {
+                        targetEmail: newEmail,
+                        pinCode: newPin,
+                        updatedAt: serverTimestamp()
+                    }, { merge: true });
+                } catch (err) {
+                    console.error('Settings save error:', err);
+                }
+            }
+
+            settingsSavedBadge.classList.remove('hidden');
+            setTimeout(() => settingsSavedBadge.classList.add('hidden'), 3000);
+        });
+
+        // Initialize Firebase Auth & Real-Time Listeners
+        async function initCloudBackend() {
+            try {
+                if (typeof __firebase_config === 'undefined') return;
+                const firebaseConfig = JSON.parse(__firebase_config);
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                onAuthStateChanged(auth, (user) => {
+                    currentUser = user;
+                    if (!user) return;
+
+                    // Listen to Admin Settings
+                    const settingsRef = doc(db, 'artifacts', appId, 'public', 'data', 'admin_settings', 'config');
+                    onSnapshot(settingsRef, (snap) => {
+                        if (snap.exists()) {
+                            const data = snap.data();
+                            adminConfig.targetEmail = data.targetEmail || '';
+                            adminConfig.pinCode = data.pinCode || '1453';
+                            if (isAdminUnlocked && adminTargetEmailInput) {
+                                adminTargetEmailInput.value = adminConfig.targetEmail;
+                                adminNewPinInput.value = adminConfig.pinCode;
+                            }
+                        }
+                    }, (err) => console.error('Settings snapshot error:', err));
+
+                    // Listen to Incoming Contact Messages (Simple collection query per Rule 2)
+                    const msgsCol = collection(db, 'artifacts', appId, 'public', 'data', 'contact_messages');
+                    onSnapshot(msgsCol, (snapshot) => {
+                        const list = [];
+                        snapshot.forEach(docSnap => {
+                            list.push({ id: docSnap.id, ...docSnap.data() });
+                        });
+                        // Sort newest first in memory
+                        list.sort((a, b) => {
+                            const tA = a.createdAt && typeof a.createdAt.toMillis === 'function' ? a.createdAt.toMillis() : (a.clientTime || 0);
+                            const tB = b.createdAt && typeof b.createdAt.toMillis === 'function' ? b.createdAt.toMillis() : (b.clientTime || 0);
+                            return tB - tA;
+                        });
+                        messagesCache = list;
+                        renderAdminMessages();
+                    }, (err) => console.error('Messages snapshot error:', err));
+                });
+            } catch (error) {
+                console.error('Firebase init error:', error);
+            }
+        }
+
+        initCloudBackend();
+
+        // Mailto Fallback Button
+        mailtoFallbackBtn.addEventListener('click', () => {
+            const name = document.getElementById('senderName').value.trim();
+            const email = document.getElementById('senderEmail').value.trim();
+            const subject = document.getElementById('senderSubject').value.trim() || 'Portfolyo İletişim';
+            const message = document.getElementById('senderMessage').value.trim();
+            const target = adminConfig.targetEmail || '';
+            const body = encodeURIComponent(`Gönderen: ${name} (${email})\n\n${message}`);
+            window.location.href = `mailto:${target}?subject=${encodeURIComponent(subject)}&body=${body}`;
+        });
+
+        // 8. Contact Form Submission (Saves to Admin Panel + Forwards via FormSubmit if Email Configured)
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('senderName').value.trim();
+            const email = document.getElementById('senderEmail').value.trim();
+            const subject = document.getElementById('senderSubject').value.trim();
+            const message = document.getElementById('senderMessage').value.trim();
+
+            submitContactBtn.disabled = true;
+            submitBtnText.textContent = currentLang === 'tr' ? 'Gönderiliyor...' : 'Sending...';
+
+            let savedToPanel = false;
+            let forwardedToEmail = false;
+
+            // A) Save persistently to Firestore Admin Panel
+            if (db && currentUser) {
+                try {
+                    const msgsCol = collection(db, 'artifacts', appId, 'public', 'data', 'contact_messages');
+                    await addDoc(msgsCol, {
+                        name,
+                        email,
+                        subject,
+                        message,
+                        read: false,
+                        createdAt: serverTimestamp(),
+                        clientTime: Date.now()
+                    });
+                    savedToPanel = true;
+                } catch (err) {
+                    console.error('Firestore save error:', err);
+                }
+            }
+
+            // B) Forward directly to configured email address via FormSubmit AJAX
+            if (adminConfig.targetEmail) {
+                try {
+                    const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(adminConfig.targetEmail)}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: name,
+                            email: email,
+                            _subject: `[Portfolyo] ${subject}`,
+                            message: message
+                        })
+                    });
+                    if (res.ok) forwardedToEmail = true;
+                } catch (err) {
+                    console.error('Email forwarding error:', err);
+                }
+            }
+
+            // Show user feedback
+            formFeedback.classList.remove('hidden');
+            formFeedbackText.textContent = translations[currentLang].form_success;
+
+            if (forwardedToEmail) {
+                formEmailStatusText.textContent = currentLang === 'tr'
+                    ? '✓ Mesaj ayrıca doğrudan e-posta adresine iletildi.'
+                    : '✓ Message was also forwarded directly via email.';
+            } else if (savedToPanel) {
+                formEmailStatusText.textContent = currentLang === 'tr'
+                    ? '✓ Mesaj Yönetim Paneli gelen kutusuna kaydedildi.'
+                    : '✓ Message saved to the Admin Panel inbox.';
+            } else {
+                formEmailStatusText.textContent = '';
+            }
+
+            contactForm.reset();
+            submitContactBtn.disabled = false;
+            submitBtnText.textContent = translations[currentLang].form_submit;
+
+            setTimeout(() => {
+                formFeedback.classList.add('hidden');
+            }, 7000);
+        });
+    </script>
+</body>
+</html>
