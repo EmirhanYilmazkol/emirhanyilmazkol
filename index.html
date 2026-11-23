@@ -215,9 +215,9 @@
                             <a href="https://www.instagram.com/emirhanyilmazkol/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-pink-500 dark:hover:text-pink-400 hover:border-pink-500/40 transition-all">
                                 <i class="fa-brands fa-instagram text-lg"></i>
                             </a>
-                            <a href="tel:xxxxxxxxxxx" aria-label="Phone" title="xxxxxxxxxxx" class="px-3.5 h-10 rounded-xl glass-card flex items-center justify-center gap-2 text-xs font-mono text-slate-700 dark:text-slate-200 hover:text-emerald-500 dark:hover:text-emerald-400 hover:border-emerald-500/40 transition-all">
+                            <a href="tel:+90 545 805 3179" aria-label="Phone" title="+90 545 805 3179" class="px-3.5 h-10 rounded-xl glass-card flex items-center justify-center gap-2 text-xs font-mono text-slate-700 dark:text-slate-200 hover:text-emerald-500 dark:hover:text-emerald-400 hover:border-emerald-500/40 transition-all">
                                 <i class="fa-solid fa-phone text-emerald-500"></i>
-                                <span>xxxxxxxxxxx</span>
+                                <span>+90 545 805 3179</span>
                             </a>
                         </div>
                     </div>
@@ -818,13 +818,13 @@
                         </a>
 
                         <div class="glass-card rounded-2xl p-5 flex items-center justify-between gap-3 hover:border-emerald-500/50 transition-all group">
-                            <a href="tel:xxxxxxxxxxx" class="flex items-center space-x-4 min-w-0">
+                            <a href="tel:+90 545 805 3179" class="flex items-center space-x-4 min-w-0">
                                 <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                                     <i class="fa-solid fa-phone text-xl"></i>
                                 </div>
                                 <div class="min-w-0">
                                     <h3 class="font-bold text-slate-900 dark:text-white text-sm" data-i18n="contact_phone_label">Telefon / GitHub</h3>
-                                    <p class="text-xs sm:text-sm font-mono text-slate-600 dark:text-slate-300 truncate">xxxxxxxxxxx</p>
+                                    <p class="text-xs sm:text-sm font-mono text-slate-600 dark:text-slate-300 truncate">+90 545 805 3179</p>
                                 </div>
                             </a>
                             <button type="button" id="copyPhoneBtn" aria-label="Copy Phone Number" class="px-3 py-2 rounded-xl bg-slate-200/80 dark:bg-slate-800 hover:bg-emerald-500 hover:text-white text-slate-700 dark:text-slate-200 text-xs font-mono transition-colors shrink-0">
@@ -975,7 +975,7 @@
                         </div>
                         <div class="sm:col-span-3">
                             <label class="block text-[11px] font-mono text-slate-500 dark:text-slate-400 mb-1" data-i18n="admin_new_pin">Panel PIN Kodu</label>
-                            <input type="text" id="adminNewPinInput" maxlength="12" placeholder="1453" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white font-mono text-xs sm:text-sm focus:outline-none focus:border-cyan-500">
+                            <input type="text" id="adminNewPinInput" maxlength="12" placeholder="2714" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white font-mono text-xs sm:text-sm focus:outline-none focus:border-cyan-500">
                         </div>
                         <div class="sm:col-span-3">
                             <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs sm:text-sm font-semibold transition-colors">
@@ -1377,7 +1377,7 @@
         let messagesCache = [];
         let adminConfig = {
             targetEmail: '',
-            pinCode: '1453'
+            pinCode: '2714'
         };
         let isAdminUnlocked = false;
         let inboxFilter = 'all';
@@ -1508,7 +1508,7 @@
                 adminDashboardView.classList.remove('hidden');
                 adminLogoutBtn.classList.remove('hidden');
                 adminTargetEmailInput.value = adminConfig.targetEmail || '';
-                adminNewPinInput.value = adminConfig.pinCode || '1453';
+                adminNewPinInput.value = adminConfig.pinCode || '2714';
                 renderAdminMessages();
             } else {
                 adminLoginView.classList.remove('hidden');
@@ -1543,7 +1543,7 @@
         adminPinForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const entered = adminPinInput.value.trim();
-            if (entered === (adminConfig.pinCode || '1453')) {
+            if (entered === (adminConfig.pinCode || '2714')) {
                 isAdminUnlocked = true;
                 adminPinError.classList.add('hidden');
                 openAdminModal();
@@ -1595,7 +1595,7 @@
         adminSettingsForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const newEmail = adminTargetEmailInput.value.trim();
-            const newPin = adminNewPinInput.value.trim() || '1453';
+            const newPin = adminNewPinInput.value.trim() || '2714';
             adminConfig.targetEmail = newEmail;
             adminConfig.pinCode = newPin;
 
@@ -1641,7 +1641,7 @@
                         if (snap.exists()) {
                             const data = snap.data();
                             adminConfig.targetEmail = data.targetEmail || '';
-                            adminConfig.pinCode = data.pinCode || '1453';
+                            adminConfig.pinCode = data.pinCode || '2714';
                             if (isAdminUnlocked && adminTargetEmailInput) {
                                 adminTargetEmailInput.value = adminConfig.targetEmail;
                                 adminNewPinInput.value = adminConfig.pinCode;
