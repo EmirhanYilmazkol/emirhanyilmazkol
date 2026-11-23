@@ -1384,7 +1384,7 @@
         let currentUser = null;
 
         // Varsayılan E-posta adresinizi isterseniz buraya da yazabilirsiniz (Örn: 'emirhan@gmail.com')
-        const DEFAULT_TARGET_EMAIL = 'emirhanyilmazkol12@gmail.com';
+        const DEFAULT_TARGET_EMAIL = '';
 
         function loadLocalConfig() {
             try {
@@ -1798,13 +1798,25 @@
             const recipientEmail = (adminConfig.targetEmail || DEFAULT_TARGET_EMAIL || '').trim();
             if (recipientEmail) {
                 try {
+                    const formattedDate = new Date(nowTs).toLocaleString('tr-TR', {
+                        dateStyle: 'long',
+                        timeStyle: 'short'
+                    });
+
                     const formData = new FormData();
-                    formData.append('name', name);
-                    formData.append('email', email);
-                    formData.append('_subject', `[Portfolyo] ${subject}`);
-                    formData.append('_template', 'table');
+                    // FormSubmit özel yapılandırma alanları
+                    formData.append('_subject', `📩 Yeni Portfolyo Mesajı: ${subject}`);
+                    formData.append('_template', 'box');
+                    formData.append('_replyto', email);
                     formData.append('_captcha', 'false');
-                    formData.append('message', message);
+
+                    // E-postada şık kutular içinde görünecek düzenli alanlar
+                    formData.append('👤 Gönderen Adı Soyadı', name);
+                    formData.append('📧 Gönderen E-posta', email);
+                    formData.append('📌 Mesaj Konusu', subject);
+                    formData.append('🕒 Gönderim Zamanı', formattedDate);
+                    formData.append('🌐 Kaynak', 'Emirhan Yılmazkol Kişisel Web Sitesi');
+                    formData.append('💬 Mesaj İçeriği', message);
 
                     const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(recipientEmail)}`, {
                         method: 'POST',
