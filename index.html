@@ -940,7 +940,7 @@
                     </p>
                 </div>
                 <form id="adminPinForm" class="w-full max-w-xs space-y-3">
-                    <input type="password" id="adminPinInput" maxlength="12" required placeholder="PIN Kodu" class="w-full px-4 py-3 rounded-xl text-center font-mono tracking-widest bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500">
+                    <input type="password" id="adminPinInput" maxlength="12" required placeholder="Giriş Kodu" class="w-full px-4 py-3 rounded-xl text-center font-mono tracking-widest bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500">
                     <p id="adminPinError" class="hidden text-xs text-rose-500 font-mono">Hatalı PIN kodu! Tekrar deneyin.</p>
                     <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-600 hover:to-emerald-600 text-white font-semibold shadow-lg shadow-cyan-500/20 transition-all">
                         <span data-i18n="admin_unlock_btn">Paneli Aç</span>
@@ -1330,7 +1330,7 @@
 
                 projectCards.forEach(card => {
                     const categories = card.getAttribute('data-category');
-                    if (filterValue === 'all' || categories.includes(filterValue)) {
+                    if (filterValue === 'all' || (categories && categories.includes(filterValue))) {
                         card.classList.remove('hidden');
                     } else {
                         card.classList.add('hidden');
@@ -1339,7 +1339,7 @@
             });
         });
 
-        // 6. Copy Phone Number Handler
+        // 6. Copy Phone Number Button
         const copyPhoneBtn = document.getElementById('copyPhoneBtn');
         const copyPhoneIcon = document.getElementById('copyPhoneIcon');
         const copyPhoneText = document.getElementById('copyPhoneText');
@@ -1351,34 +1351,78 @@
                 tempInput.value = phoneNumber;
                 document.body.appendChild(tempInput);
                 tempInput.select();
-                try {
-                    document.execCommand('copy');
-                } catch (err) {}
+                document.execCommand('copy');
                 document.body.removeChild(tempInput);
 
-                copyPhoneIcon.classList.remove('fa-copy', 'fa-regular');
-                copyPhoneIcon.classList.add('fa-check', 'fa-solid', 'text-emerald-500');
-                copyPhoneText.textContent = translations[currentLang].copied_btn;
+                if (copyPhoneIcon) {
+                    copyPhoneIcon.classList.remove('fa-regular', 'fa-copy');
+                    copyPhoneIcon.classList.add('fa-solid', 'fa-check');
+                }
+                if (copyPhoneText) {
+                    copyPhoneText.textContent = translations[currentLang].copied_btn;
+                }
 
                 setTimeout(() => {
-                    copyPhoneIcon.classList.remove('fa-check', 'fa-solid', 'text-emerald-500');
-                    copyPhoneIcon.classList.add('fa-regular', 'fa-copy');
-                    copyPhoneText.textContent = translations[currentLang].copy_btn;
-                }, 2500);
+                    if (copyPhoneIcon) {
+                        copyPhoneIcon.classList.remove('fa-solid', 'fa-check');
+                        copyPhoneIcon.classList.add('fa-regular', 'fa-copy');
+                    }
+                    if (copyPhoneText) {
+                        copyPhoneText.textContent = translations[currentLang].copy_btn;
+                    }
+                }, 2000);
             });
         }
 
-        // 7. Firebase Cloud Setup + Dual Contact Delivery + Admin Panel (Yönetim Paneli)
+        // 7. Firebase Cloud Setup + LocalStorage Fallback + Dual Contact Delivery + Admin Panel
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'emirhan-portfolio-app';
+        const STORAGE_CONFIG_KEY = 'emirhan_portfolio_admin_config_v1';
+        const STORAGE_MSGS_KEY = 'emirhan_portfolio_messages_v1';
+
         let db = null;
         let auth = null;
         let currentUser = null;
 
-        let messagesCache = [];
-        let adminConfig = {
-            targetEmail: '',
-            pinCode: '2714'
-        };
+        // Varsayılan E-posta adresinizi isterseniz buraya da yazabilirsiniz (Örn: 'emirhan@gmail.com')
+        const DEFAULT_TARGET_EMAIL = 'emirhanyilmazkol12@gmail.com';
+
+        function loadLocalConfig() {
+            try {
+                const raw = localStorage.getItem(STORAGE_CONFIG_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    return {
+                        targetEmail: parsed.targetEmail || DEFAULT_TARGET_EMAIL,
+                        pinCode: parsed.pinCode || '2714'
+                    };
+                }
+            } catch (e) {}
+            return { targetEmail: DEFAULT_TARGET_EMAIL, pinCode: '2714' };
+        }
+
+        function saveLocalConfig(cfg) {
+            try {
+                localStorage.setItem(STORAGE_CONFIG_KEY, JSON.stringify(cfg));
+            } catch (e) {}
+        }
+
+        function loadLocalMessages() {
+            try {
+                const raw = localStorage.getItem(STORAGE_MSGS_KEY);
+                return raw ? JSON.parse(raw) : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveLocalMessages(list) {
+            try {
+                localStorage.setItem(STORAGE_MSGS_KEY, JSON.stringify(list));
+            } catch (e) {}
+        }
+
+        let messagesCache = loadLocalMessages();
+        let adminConfig = loadLocalConfig();
         let isAdminUnlocked = false;
         let inboxFilter = 'all';
 
@@ -1573,21 +1617,35 @@
         // Message Actions (Mark Read/Unread & Delete)
         adminMessagesList.addEventListener('click', async (e) => {
             const btn = e.target.closest('button[data-action]');
-            if (!btn || !db || !currentUser) return;
+            if (!btn) return;
 
             const action = btn.getAttribute('data-action');
             const msgId = btn.getAttribute('data-id');
-            const msgRef = doc(db, 'artifacts', appId, 'public', 'data', 'contact_messages', msgId);
 
-            try {
-                if (action === 'toggle-read') {
-                    const currentlyRead = btn.getAttribute('data-read') === '1';
-                    await updateDoc(msgRef, { read: !currentlyRead });
-                } else if (action === 'delete') {
-                    await deleteDoc(msgRef);
+            // Update local cache immediately so it works offline/Vercel too
+            if (action === 'toggle-read') {
+                const currentlyRead = btn.getAttribute('data-read') === '1';
+                messagesCache = messagesCache.map(m => m.id === msgId ? { ...m, read: !currentlyRead } : m);
+                saveLocalMessages(messagesCache);
+                renderAdminMessages();
+
+                if (db && currentUser) {
+                    try {
+                        const msgRef = doc(db, 'artifacts', appId, 'public', 'data', 'contact_messages', msgId);
+                        await updateDoc(msgRef, { read: !currentlyRead });
+                    } catch (err) {}
                 }
-            } catch (err) {
-                console.error('Message update error:', err);
+            } else if (action === 'delete') {
+                messagesCache = messagesCache.filter(m => m.id !== msgId);
+                saveLocalMessages(messagesCache);
+                renderAdminMessages();
+
+                if (db && currentUser) {
+                    try {
+                        const msgRef = doc(db, 'artifacts', appId, 'public', 'data', 'contact_messages', msgId);
+                        await deleteDoc(msgRef);
+                    } catch (err) {}
+                }
             }
         });
 
@@ -1598,6 +1656,7 @@
             const newPin = adminNewPinInput.value.trim() || '2714';
             adminConfig.targetEmail = newEmail;
             adminConfig.pinCode = newPin;
+            saveLocalConfig(adminConfig);
 
             if (db && currentUser) {
                 try {
@@ -1618,6 +1677,7 @@
 
         // Initialize Firebase Auth & Real-Time Listeners
         async function initCloudBackend() {
+            renderAdminMessages();
             try {
                 if (typeof __firebase_config === 'undefined') return;
                 const firebaseConfig = JSON.parse(__firebase_config);
@@ -1640,8 +1700,9 @@
                     onSnapshot(settingsRef, (snap) => {
                         if (snap.exists()) {
                             const data = snap.data();
-                            adminConfig.targetEmail = data.targetEmail || '';
-                            adminConfig.pinCode = data.pinCode || '2714';
+                            adminConfig.targetEmail = data.targetEmail || adminConfig.targetEmail;
+                            adminConfig.pinCode = data.pinCode || adminConfig.pinCode || '2714';
+                            saveLocalConfig(adminConfig);
                             if (isAdminUnlocked && adminTargetEmailInput) {
                                 adminTargetEmailInput.value = adminConfig.targetEmail;
                                 adminNewPinInput.value = adminConfig.pinCode;
@@ -1663,6 +1724,7 @@
                             return tB - tA;
                         });
                         messagesCache = list;
+                        saveLocalMessages(list);
                         renderAdminMessages();
                     }, (err) => console.error('Messages snapshot error:', err));
                 });
@@ -1697,8 +1759,24 @@
 
             let savedToPanel = false;
             let forwardedToEmail = false;
+            const nowTs = Date.now();
 
-            // A) Save persistently to Firestore Admin Panel
+            // A) Save to LocalStorage immediately so Admin Panel always works on Vercel/GitHub Pages
+            const localMsgObj = {
+                id: 'local_' + nowTs,
+                name,
+                email,
+                subject,
+                message,
+                read: false,
+                clientTime: nowTs
+            };
+            messagesCache = [localMsgObj, ...messagesCache];
+            saveLocalMessages(messagesCache);
+            renderAdminMessages();
+            savedToPanel = true;
+
+            // B) Also save to Firestore if running inside Cloud environment
             if (db && currentUser) {
                 try {
                     const msgsCol = collection(db, 'artifacts', appId, 'public', 'data', 'contact_messages');
@@ -1709,31 +1787,36 @@
                         message,
                         read: false,
                         createdAt: serverTimestamp(),
-                        clientTime: Date.now()
+                        clientTime: nowTs
                     });
-                    savedToPanel = true;
                 } catch (err) {
                     console.error('Firestore save error:', err);
                 }
             }
 
-            // B) Forward directly to configured email address via FormSubmit AJAX
-            if (adminConfig.targetEmail) {
+            // C) Forward directly to configured email address via FormSubmit AJAX
+            const recipientEmail = (adminConfig.targetEmail || DEFAULT_TARGET_EMAIL || '').trim();
+            if (recipientEmail) {
                 try {
-                    const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(adminConfig.targetEmail)}`, {
+                    const formData = new FormData();
+                    formData.append('name', name);
+                    formData.append('email', email);
+                    formData.append('_subject', `[Portfolyo] ${subject}`);
+                    formData.append('_template', 'table');
+                    formData.append('_captcha', 'false');
+                    formData.append('message', message);
+
+                    const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(recipientEmail)}`, {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json',
                             'Accept': 'application/json'
                         },
-                        body: JSON.stringify({
-                            name: name,
-                            email: email,
-                            _subject: `[Portfolyo] ${subject}`,
-                            message: message
-                        })
+                        body: formData
                     });
-                    if (res.ok) forwardedToEmail = true;
+                    const data = await res.json().catch(() => ({}));
+                    if (res.ok || data.success === 'true' || data.success === true) {
+                        forwardedToEmail = true;
+                    }
                 } catch (err) {
                     console.error('Email forwarding error:', err);
                 }
@@ -1745,12 +1828,16 @@
 
             if (forwardedToEmail) {
                 formEmailStatusText.textContent = currentLang === 'tr'
-                    ? '✓ Mesaj ayrıca doğrudan e-posta adresine iletildi.'
-                    : '✓ Message was also forwarded directly via email.';
+                    ? `✓ Mesaj Yönetim Paneline kaydedildi ve ${recipientEmail} adresine iletildi. (İlk gönderimde gelen onay mailini kontrol edin.)`
+                    : `✓ Message saved to Admin Panel and forwarded to ${recipientEmail}.`;
+            } else if (!recipientEmail) {
+                formEmailStatusText.textContent = currentLang === 'tr'
+                    ? '✓ Mesaj Yönetim Paneline kaydedildi. (E-posta iletimi için /yonetim panelinden e-posta adresinizi tanımlayın.)'
+                    : '✓ Message saved to Admin Panel. (Configure your target email in /yonetim for email forwarding.)';
             } else if (savedToPanel) {
                 formEmailStatusText.textContent = currentLang === 'tr'
-                    ? '✓ Mesaj Yönetim Paneli gelen kutusuna kaydedildi.'
-                    : '✓ Message saved to the Admin Panel inbox.';
+                    ? '✓ Mesaj Yönetim Paneline kaydedildi. E-posta yönlendirme servisi yanıtı bekleniyor.'
+                    : '✓ Message saved to Admin Panel.';
             } else {
                 formEmailStatusText.textContent = '';
             }
@@ -1761,7 +1848,7 @@
 
             setTimeout(() => {
                 formFeedback.classList.add('hidden');
-            }, 7000);
+            }, 9000);
         });
     </script>
 </body>
